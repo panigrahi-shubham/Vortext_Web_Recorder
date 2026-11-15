@@ -39,7 +39,12 @@ try {
   assert.equal(scout.info.name, 'Login');
   writeFileSync(path.join(consumer, 'tests/my-product/package-smoke.spec.ts'), `import {test,expect} from '@playwright/test';\ntest('installed package browser workflow',async({page})=>{await page.goto(${JSON.stringify(fixture.url + '/')});await expect(page.getByRole('button',{name:'Login'})).toBeVisible();});\n`);
   assert.match(await run([cli, 'run', '--module', 'my-product']), /1 passed/);
-  console.log('Package smoke passed: clean consumer installation, init, browser doctor, shared locator engine, packaged fixtures, native test run.');
+  const history = JSON.parse(await run([cli, 'history', '--json']));
+  assert.equal(history.length, 1);
+  assert.equal(history[0].status, 'passed');
+  const report = (await run([cli, 'report', '--run', history[0].id, '--path'])).trim();
+  assert.ok(readFileSync(path.join(report, 'index.html'), 'utf8').includes('<html'));
+  console.log('Package smoke passed: clean consumer installation, init, browser doctor, shared locator engine, packaged fixtures, native test run, persistent history and report lookup.');
 } finally {
   await fixture?.close();
   rmSync(consumer, { recursive: true, force: true });

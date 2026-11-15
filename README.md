@@ -1,11 +1,11 @@
-# Vortex QA v2.0.0-beta.1
+# Vortex QA v3.0.0-beta.1
 
 Two local development tools live in this repository:
 
 - **Chrome extension:** Locator Scout, under `extension/`. Pick elements, inspect ranked locators, scan pages, verify expressions, and export Playwright or Selenium Page Objects.
 - **npm software:** `vortex-web-recorder`. Record browser journeys, edit generated code, save tests, run them with Playwright, and inspect locators with the same engine used by the extension.
 
-This beta adds packaging and reliability improvements to the supplied v1.2 recorder and v0.1 extension. It is a first v2 milestone; draft recovery, datasets, and report history are future work. The recorder's existing capture engine remains in place. The extension and the new `scout` command share the extension locator engine; the recorder's locator ranking has not been replaced.
+This v3 beta adds persistent run history on top of the v2 packaging and reliability improvements. Draft recovery and datasets remain future work. The recorder's existing capture engine remains in place. The extension and the new `scout` command share the extension locator engine; the recorder's locator ranking has not been replaced.
 
 ## Build both products
 
@@ -23,12 +23,12 @@ npm run release
 
 ## Install the Chrome extension
 
-Extract `artifacts/vortex-locator-scout-2.0.0-beta.1.zip` into a folder. In Chrome or Edge, open `chrome://extensions`, enable Developer mode, select **Load unpacked**, and choose that extracted folder. Developers can load `extension/dist` directly after building. See [extension/README.md](extension/README.md) for usage and permissions.
+Extract `artifacts/vortex-locator-scout-3.0.0-beta.1.zip` into a folder. In Chrome or Edge, open `chrome://extensions`, enable Developer mode, select **Load unpacked**, and choose that extracted folder. Developers can load `extension/dist` directly after building. See [extension/README.md](extension/README.md) for usage and permissions.
 
 ## Install the npm software in your test project
 
 ```sh
-npm install --save-dev /path/to/vortex-web-recorder-2.0.0-beta.1.tgz
+npm install --save-dev /path/to/vortex-web-recorder-3.0.0-beta.1.tgz
 npx playwright install chromium
 npx vortex-qa init
 npx vortex-qa doctor --panel-port 0
@@ -68,6 +68,44 @@ The proposed reference site is https://vortex-qa.vercel.app/shop. Cloud network 
 ```sh
 npx vortex-qa record --url https://vortex-qa.vercel.app/shop --module my-product
 ```
+
+
+See [V3-VALIDATION.md](V3-VALIDATION.md) for executed checks and limits.
+
+## v3: run history
+
+Every execution through `vortex-qa run` or the recorder panel saves its status, selection, timestamps, exit code, and console output under `reports/history/<run-id>/`. With the supplied configuration, the same directory retains the native HTML report, JSON results, screenshots, and traces. The most recent native report is also copied to `reports/latest` for compatibility.
+
+```sh
+npx vortex-qa history
+npx vortex-qa history --json
+npx vortex-qa report --run <run-id>
+npx vortex-qa report --run <run-id> --path
+```
+
+`report` opens the saved native Playwright report on loopback; `--path` prints its folder without starting a server. Run IDs are also printed in the recorder panel after execution. History timestamps are ISO UTC. Failed runs remain available after a later passing run. Listing tests, empty suites, and discovery errors do not create history entries or replace the latest report. A process killed before finalization leaves a `running` entry, meaning no final outcome was recorded; it must not be counted as passed.
+
+History is local and has no automatic retention limit. Reports and logs can contain application data. Keep `reports/` ignored and delete old run folders when no longer needed. Direct `npx playwright test` commands do not create framework history.
+
+### Existing Playwright configurations
+
+`vortex-qa init` preserves existing files. To retain native reports from an existing configuration, use the run directory supplied by the runner:
+
+```ts
+import path from 'node:path';
+const reportDir = process.env.VORTEX_REPORT_DIR || 'reports/latest';
+// In your defineConfig options:
+// reporter: [
+//   ['list'],
+//   ['html', { outputFolder: path.join(reportDir, 'html'), open: 'never' }],
+//   ['json', { outputFile: path.join(reportDir, 'results.json') }],
+// ],
+// outputDir: path.join(reportDir, 'artifacts'),
+```
+
+Configurations that ignore this variable retain status and console output in history, but native evidence follows their own configured paths. The history CLI does not claim an HTML report exists for such runs. Their last framework-generated report remains unchanged.
+
+The Chrome extension is included in the coordinated v3 beta release; this milestone changes the npm recorder's reporting workflow, with the extension's locator behavior preserved.
 
 ## Earlier recorder documentation
 

@@ -256,7 +256,7 @@ export async function startPanel(session: RecorderSession, opts: PanelOptions): 
           const append = (s: string) => { run.output = (run.output + s).slice(-40000); broadcast(); };
           void runTests(opts.frameworkRoot, { file: savedFile }, append).then(result => {
             run.code = result.code;
-            run.output = result.output.slice(-40000);
+            run.output = result.output.slice(-40000) + (result.runId ? `\nRun saved: ${result.runId}\nView runs: vortex-qa history` : '');
           }).catch(e => { run.code = 1; run.output = e.message; }).finally(() => { run.running = false; broadcast(); });
           broadcast();
           return json(res, 202, state());

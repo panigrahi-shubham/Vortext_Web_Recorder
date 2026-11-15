@@ -2,9 +2,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { EMPTY_SUITE, moduleDirectory } from './modules';
+import { beginRun, finishRun, runDirectory } from './history';
 
 export interface RunSelection { module?: string; file?: string; title?: string; list?: boolean; headed?: boolean }
-export interface RunResult { code: number; output: string }
+export interface RunResult { code: number; output: string; runId?: string }
 
 export function selectionArgs(root: string, selection: RunSelection): string[] {
   if (selection.module && selection.file) throw new Error('Choose --module or --file, not both.');
@@ -27,13 +28,13 @@ export function selectionArgs(root: string, selection: RunSelection): string[] {
   return args;
 }
 
-function child(root: string, args: string[], output?: (text: string) => void): Promise<RunResult> {
+function child(root: string, args: string[], output?: (text: string) => void, reportDir?: string): Promise<RunResult> {
   const configuration = ['ts', 'js', 'mjs', 'cjs'].map(ext => path.join(root, `playwright.config.${ext}`)).find(file => fs.existsSync(file));
   if (!configuration) throw new Error('No Playwright configuration found. Run vortex-qa init in your project first.');
   return new Promise(resolve => {
     let combined = '';
     const proc = spawn(process.execPath, [require.resolve('@playwright/test/cli'), 'test', '-c', configuration, ...args], {
-      cwd: root, env: { ...process.env, FORCE_COLOR: '0' }, shell: false,
+      cwd: root, env: { ...process.env, FORCE_COLOR: '0', VORTEX_REPORT_DIR: reportDir ?? '' }, shell: false,
     });
     const append = (chunk: Buffer) => { const s = chunk.toString(); combined += s; output?.(s); };
     proc.stdout.on('data', append); proc.stderr.on('data', append);
@@ -70,6 +71,15 @@ export async function runTests(root: string, selection: RunSelection, output?: (
     }
     if (discovered.code) return discovered;
     if (selection.list) return { code: 0, output: discovered.output };
-    return await child(root, [...args, ...(selection.headed ? ['--headed'] : [])], output);
+    const record = beginRun(root, selection);
+    let result: RunResult;
+    try {
+      result = await child(root, [...args, ...(selection.headed ? ['--headed'] : [])], output, runDirectory(root, record.id));
+    } catch (error) {
+      finishRun(root, record, 1, error instanceof Error ? error.message : String(error));
+      throw error;
+    }
+    finishRun(root, record, result.code, result.output);
+    return { ...result, runId: record.id };
   } finally { fs.closeSync(fd); fs.unlinkSync(lockFile); }
 }

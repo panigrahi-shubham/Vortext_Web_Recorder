@@ -4,11 +4,30 @@ import { parseArgs, str, bool, parseViewport } from '../util/args';
 import { discoverModules, moduleDirectory } from './modules';
 import { runTests } from './runner';
 import { checkReadiness } from './doctor';
+import { spawn } from 'node:child_process';
+import { listRuns, reportDirectory } from './history';
 
 async function main() {
   const root = process.cwd();
   const args = parseArgs(process.argv.slice(2));
   const cmd = args._[0];
+  if (cmd === 'history') {
+    const runs = listRuns(root);
+    if (bool(args, 'json')) console.log(JSON.stringify(runs, null, 2));
+    else if (!runs.length) console.log('No recorded runs yet. Execute tests with vortex-qa run.');
+    else for (const run of runs) console.log(`${run.id}  ${run.status}  ${run.selection.module ?? run.selection.file ?? 'all tests'}${run.htmlReport ? '  [HTML report]' : ''}`);
+    return;
+  }
+  if (cmd === 'report') {
+    const id = str(args, 'run');
+    if (!id) throw new Error('Usage: vortex-qa report --run <run-id>');
+    const directory = reportDirectory(root, id);
+    if (bool(args, 'path')) { console.log(directory); return; }
+    const child = spawn(process.execPath, [require.resolve('@playwright/test/cli'), 'show-report', directory, '--host', '127.0.0.1'], { stdio: 'inherit' });
+    child.once('error', error => { console.error(error.message); process.exitCode = 1; });
+    child.once('exit', code => { process.exitCode = code ?? 1; });
+    return;
+  }
   if (cmd === 'init') {
     const { initProject } = await import('./init');
     const written = initProject(root);
@@ -35,6 +54,7 @@ async function main() {
     const result = await runTests(root, { module: str(args, 'module'), file: str(args, 'file'), title: str(args, 'title'), list: bool(args, 'list'), headed: bool(args, 'headed') }, s => process.stdout.write(s));
     // Execution streams its output; discovery and list results are returned.
     if (bool(args, 'list') || !result.output.includes('Running ')) console.log(result.output);
+    if (result.runId) console.log(`Run saved: ${result.runId}\nView runs: vortex-qa history`);
     process.exitCode = result.code;
     return;
   }
@@ -54,7 +74,7 @@ async function main() {
     });
     return;
   }
-  console.log('Vortex QA v2\n  vortex-qa init\n  vortex-qa scout --url <url> --selector <unique-css-selector>\n  npm run qa:doctor\n  npm run qa -- modules\n  npm run qa -- record --url https://your-app.example --module my-product\n  npm run qa -- run [--module name | --file tests/module/flow/specs/flow.spec.ts] [--title "case name"] [--list] [--headed]');
+  console.log('Vortex QA v3\n  vortex-qa init\n  vortex-qa history [--json]\n  vortex-qa report --run <run-id> [--path]\n  vortex-qa scout --url <url> --selector <unique-css-selector>\n  npm run qa:doctor\n  npm run qa -- modules\n  npm run qa -- record --url https://your-app.example --module my-product\n  npm run qa -- run [--module name | --file tests/module/flow/specs/flow.spec.ts] [--title "case name"] [--list] [--headed]');
   if (cmd && cmd !== 'help') process.exitCode = 1;
 }
 main().catch(e => { console.error(e instanceof Error ? e.message : String(e)); process.exitCode = 1; });

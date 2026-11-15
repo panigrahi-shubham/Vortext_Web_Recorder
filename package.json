@@ -1,6 +1,6 @@
 {
   "name": "vortex-web-recorder",
-  "version": "2.0.0-beta.1",
+  "version": "3.0.0-beta.1",
   "description": "Smart Playwright recorder that writes Page Objects, resilient locators and suggested assertions",
   "scripts": {
     "record": "tsx src/framework/cli.ts record",
@@ -18,7 +18,7 @@
     "qa:record": "tsx src/framework/cli.ts record",
     "qa:run": "tsx src/framework/cli.ts run",
     "qa:check": "tsc --noEmit -p tsconfig.qa.json",
-    "qa:report": "playwright show-report reports/latest/html",
+    "qa:report": "tsx src/framework/cli.ts report",
     "record:legacy": "tsx src/cli.ts record",
     "qa:doctor": "tsx src/framework/cli.ts doctor",
     "scout": "tsx src/framework/cli.ts scout",
@@ -29,7 +29,8 @@
     "typecheck:extension": "npm --prefix extension run typecheck",
     "prepack": "npm run build",
     "release": "npm run build && node scripts/release.mjs",
-    "test:package": "node scripts/smoke-package.mjs"
+    "test:package": "node scripts/smoke-package.mjs",
+    "qa:history": "tsx src/framework/cli.ts history"
   },
   "keywords": [
     "playwright",
@@ -61,7 +62,8 @@
     "README.md",
     "AI-GUIDE.md",
     "AUTHORING-GUIDE.md",
-    "V2-VALIDATION.md"
+    "V2-VALIDATION.md",
+    "V3-VALIDATION.md"
   ],
   "dependencies": {
     "@playwright/test": "1.56.1",
