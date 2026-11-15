@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Widgets</title><link rel="stylesheet" href="style.css">
+<style>.menu-list{display:none;list-style:none;padding:6px;background:#fff;border:1px solid #ccc;position:absolute}.account:hover .menu-list{display:block}.account{position:relative;display:inline-block}</style></head>
+<body><main>
+  <h1>Widgets</h1>
+  <div class="account"><button type="button">Account menu</button>
+    <ul class="menu-list"><li><a href="#profile" onclick="document.getElementById('status').textContent='Profile opened'">Profile</a></li></ul></div>
+  <p><span id="title" title="Double-click to edit">Untitled note</span></p>
+  <div id="ctx" style="padding:10px;background:#fff">Right-click me</div>
+  <label>Country <select id="country"><option>India</option><option>Germany</option><option>Brazil</option></select></label>
+  <label>Search <input id="search" type="search"></label>
+  <p id="status" role="status"></p>
+  <div style="height:1500px"></div>
+  <footer><button type="button" onclick="document.getElementById('status').textContent='Thanks for reading'">Back to top</button></footer>
+  <script>
+    document.getElementById('title').addEventListener('dblclick', function () { this.textContent = 'Editing note'; });
+    document.getElementById('ctx').addEventListener('contextmenu', function (e) { e.preventDefault(); document.getElementById('status').textContent = 'Context menu opened'; });
+    document.getElementById('country').addEventListener('change', function () { document.getElementById('status').textContent = 'Country: ' + this.value; });
+    document.getElementById('search').addEventListener('keydown', function (e) { if (e.key === 'Enter') document.getElementById('status').textContent = 'Results for ' + this.value; });
+  </script>
+</main></body>
+</html>

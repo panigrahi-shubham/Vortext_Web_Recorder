@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>SPA</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<nav aria-label="App"><a href="/spa/home" data-route>Home</a> | <a href="/spa/settings" data-route>Settings</a></nav>
+<main id="view"></main>
+<script>
+  var views = {
+    '/spa/home': '<h1>Home</h1><p>Welcome back.</p>',
+    '/spa/settings': '<h1>Settings</h1><label><input type="checkbox" id="dark"> Dark mode</label><button type="button" id="savebtn">Save settings</button><p id="saved" role="status"></p>',
+  };
+  function render() {
+    var path = location.pathname in views ? location.pathname : '/spa/home';
+    document.getElementById('view').innerHTML = views[path];
+    document.title = 'SPA - ' + path.split('/').pop();
+    var s = document.getElementById('savebtn');
+    if (s) s.onclick = function () {
+      fetch('/api/slow?ms=250').then(function () { document.getElementById('saved').textContent = 'Settings saved'; });
+    };
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-route]');
+    if (!a) return;
+    e.preventDefault();
+    history.pushState({}, '', a.getAttribute('href'));
+    setTimeout(render, 150); // async like a real router
+  });
+  window.addEventListener('popstate', render);
+  render();
+</script>
+</body>
+</html>

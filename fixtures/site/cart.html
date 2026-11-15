@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Demo Shop - Cart</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header class="top">
+  <strong>Demo Shop</strong>
+  <a class="cart-link" href="cart.html" aria-label="Cart">&#128722;<span class="cart-badge" data-testid="cart-badge" hidden>0</span></a>
+</header>
+<main>
+  <h1>Your Cart</h1>
+  <table>
+    <thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Action</th></tr></thead>
+    <tbody id="cart-rows"></tbody>
+  </table>
+  <p id="empty" hidden>Your cart is empty.</p>
+  <p class="cart-total" id="total"></p>
+  <a href="inventory.html">Continue Shopping</a>
+  <button class="btn" type="button" onclick="location.href='checkout.html'">Checkout</button>
+</main>
+<script src="app.js"></script>
+<script>renderCart();</script>
+</body>
+</html>

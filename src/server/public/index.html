@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vortex QA Recorder</title>
+<style>
+  :root {
+    --bg: #f5f6f8; --panel: #ffffff; --ink: #18202f; --muted: #667085; --line: #e3e6eb;
+    --accent: #3157d5; --accent-ink: #ffffff; --green: #16a34a; --amber: #d97706; --red: #dc2626;
+    --code-bg: #0f172a; --code-ink: #e2e8f0; --str: #a5d6a7; --kw: #93c5fd; --cm: #94a3b8; --num: #fcd34d;
+    --chip: #eef2ff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0b0f17; --panel: #121826; --ink: #e5e7eb; --muted: #9aa4b2; --line: #1f2937; --chip: #1e2640; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 13px/1.45 "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--ink); height: 100vh; display: flex; flex-direction: column; }
+  header { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; padding: 10px 14px; background: var(--panel); border-bottom: 1px solid var(--line); }
+  header h1 { font-size: 15px; margin: 0; letter-spacing: .2px; }
+  .pill { padding: 2px 10px; border-radius: 999px; font-weight: 600; font-size: 12px; }
+  .pill.recording { background: #fee2e2; color: #b91c1c; }
+  .pill.paused { background: #e5e7eb; color: #374151; }
+  .pill.busy { background: #fef3c7; color: #92400e; }
+  .meta { color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; min-width: 0; }
+  .meta b { color: var(--ink); font-weight: 600; }
+  .meta .url { max-width: 420px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; vertical-align: bottom; }
+  .grow { flex: 1; }
+  button, select, input[type=text] { font: inherit; color: inherit; }
+  button { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  button.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  select, input[type=text] { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 3px 6px; }
+  .modes { display: flex; gap: 4px; flex-wrap: wrap; }
+  main { flex: 1; display: grid; grid-template-columns: minmax(340px, 44%) 1fr; min-height: 0; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; grid-auto-rows: minmax(300px, auto); overflow: auto; } }
+  #steps { overflow: auto; padding: 12px; border-right: 1px solid var(--line); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; }
+  .card.dragging { opacity: .4; }
+  .card.over { border-color: var(--accent); }
+  .card .top { display: flex; gap: 8px; align-items: center; }
+  .num { font-weight: 700; color: var(--muted); min-width: 22px; cursor: grab; }
+  .kind { background: var(--chip); color: var(--accent); border-radius: 5px; padding: 0 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; }
+  .title { flex: 1; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .del { border: 0; background: transparent; color: var(--muted); font-size: 16px; padding: 0 4px; }
+  .del:hover { color: var(--red); }
+  .loc { margin-top: 6px; display: flex; gap: 6px; align-items: flex-start; }
+  .loc code { font: 12px/1.4 Consolas, Menlo, monospace; word-break: break-all; }
+  .score { display: inline-block; min-width: 32px; text-align: center; border-radius: 10px; padding: 0 6px; font-weight: 700; font-size: 11px; color: #fff; flex: none; }
+  .score.green { background: var(--green); } .score.amber { background: var(--amber); } .score.red { background: var(--red); }
+  .warn { color: var(--amber); font-size: 12px; margin-top: 3px; }
+  .warn::before { content: "⚠ "; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 8px; color: var(--muted); }
+  .row label { display: inline-flex; gap: 4px; align-items: center; cursor: pointer; }
+  .sugs { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 6px; }
+  .sugs .h { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .3px; }
+  .sug { display: flex; gap: 6px; align-items: flex-start; margin-top: 3px; }
+  .sug code { font: 11px/1.4 Consolas, Menlo, monospace; color: var(--muted); display: block; word-break: break-all; }
+  .settle { font-size: 11px; color: var(--muted); }
+  #code { display: flex; flex-direction: column; min-height: 0; }
+  .tabs { display: flex; gap: 2px; padding: 8px 10px 0; flex-wrap: wrap; align-items: flex-end; background: var(--panel); border-bottom: 1px solid var(--line); }
+  .tab { border: 1px solid var(--line); border-bottom: 0; border-radius: 6px 6px 0 0; background: var(--bg); padding: 4px 10px; }
+  .tab.on { background: var(--code-bg); color: var(--code-ink); border-color: var(--code-bg); }
+  .opts { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding: 8px 10px; background: var(--panel); border-bottom: 1px solid var(--line); color: var(--muted); }
+  pre { margin: 0; flex: 1; overflow: auto; background: var(--code-bg); color: var(--code-ink); padding: 14px; font: 12.5px/1.55 Consolas, Menlo, monospace; tab-size: 2; }
+  .s { color: var(--str); } .k { color: var(--kw); } .c { color: var(--cm); font-style: italic; } .n { color: var(--num); }
+  #toast { position: fixed; right: 16px; bottom: 16px; background: var(--ink); color: var(--panel); padding: 10px 14px; border-radius: 8px; white-space: pre; font: 12px/1.5 Consolas, Menlo, monospace; display: none; max-width: 80vw; overflow: auto; }
+  .empty { color: var(--muted); padding: 20px; text-align: center; }
+  .err { background: #fee2e2; color: #991b1b; padding: 6px 10px; border-radius: 6px; margin-bottom: 10px; }
+  input.note { width: 100%; margin-top: 6px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Vortex QA Recorder</h1>
+  <span id="status" class="pill recording">recording</span>
+  <div class="meta">
+    <span>URL <b class="url" id="url">–</b></span>
+    <span>Page object <b id="pageObject">–</b></span>
+    <span>Settle <b id="settle">–</b></span>
+  </div>
+  <div class="grow"></div>
+  <div class="modes" id="modes"></div>
+  <select id="clickStyle" title="Click style for new clicks">
+    <option value="locator">Locator</option>
+    <option value="fallback">Locator + point</option>
+    <option value="coords">Point only</option>
+  </select>
+  <button id="undo">Undo</button>
+  <button id="clear">Clear</button>
+  <button id="debug" title="Save DOM, screenshot and locator ranking to disk">Debug snapshot</button>
+  <button id="save" class="primary">Save files</button><span style="width:100%;color:var(--muted)">Record: type directly in the website. Actions: click a field to enter/paste text, clear it, copy values or press keys. Editing a recorded step changes saved code; it does not replay the edit.</span>
+</header>
+<main>
+  <section id="steps"><div class="empty">Waiting for the recorder…</div></section>
+  <section id="code">
+    <div class="opts">
+      <label id="moduleLabel" hidden>Module <select id="module"><option value="">Choose a module</option></select></label>
+      <button id="refreshModules" hidden>Refresh modules</button>
+      <label>Test name <input type="text" id="flowName" size="34"></label>
+      <label>Style <select id="style"><option value="pom">Page Objects + spec</option><option value="flat">Flat spec</option></select></label>
+      <label><input type="checkbox" id="ratio"> coordinates as viewport ratios</label>
+      <span class="grow"></span>
+      <span id="outDir"></span>
+    </div>
+    <div class="tabs" id="tabs"></div>
+    <pre id="preview"></pre><textarea id="codeEditor" hidden spellcheck="false" aria-label="Editable generated code" style="flex:1;min-height:220px;padding:14px;font:13px/1.5 Consolas,monospace;background:var(--code-bg);color:var(--code-ink);resize:vertical"></textarea>
+    <div class="opts"><button id="copy">Copy this file</button><button id="editCode">Edit code</button><button id="applyCode" hidden>Apply code edit</button><button id="resetCode">Reset code edits</button><span id="codeEditStatus"></span><button id="runSaved" hidden>Run saved test</button><span id="saveInfo"></span><span id="savedPath"></span></div>
+  </section>
+</main>
+<details id="aiPanel" style="max-height:55vh;overflow:auto;border-top:1px solid var(--line);background:var(--panel)">
+<summary style="cursor:pointer;padding:8px 14px;font-weight:600">Optional AI assistant — free-tier controls</summary>
+<div class="opts">
+<label><input type="checkbox" id="aiEnabled"> Enable AI</label>
+<label>Provider <select id="aiProvider"><option value="gemini">Gemini</option><option value="groq">Groq</option><option value="compatible">Custom compatible API</option></select></label>
+<label>Model <input type="text" id="aiModel" value="gemini-2.5-flash-lite" size="28"></label>
+<label id="aiBaseLabel" hidden>HTTPS base URL <input type="text" id="aiBase" placeholder="https://your-provider.example/v1" size="35"></label>
+<label>API key (session only) <input type="password" id="aiKey" autocomplete="off" placeholder="Or set AI_API_KEY before startup"></label>
+<label>Output token cap <input type="number" id="aiTokens" min="128" max="2048" value="1024"></label>
+<label>Session request cap <input type="number" id="aiBudget" min="1" max="100" value="20"></label>
+<button id="aiConfigure">Save AI settings</button><button id="aiClear">Disable and clear key</button>
+<span id="aiStatus" role="status"></span>
+</div>
+<div class="opts" style="display:block">
+<p style="margin:4px 0">No automatic AI calls, retries or provider fallback. Free access depends on your provider/model/account. Gemini free-tier content may be used to improve Google products. Send only approved or synthetic data. Keys stay in the local server process and are never saved in project files.</p>
+<label>Task <select id="aiTask"><option value="improve">Improve selected script</option><option value="assertions">Suggest assertions</option><option value="failure">Explain failure</option></select></label>
+<label>Optional request <input type="text" id="aiNote" size="55" maxlength="800" placeholder="What should the assistant focus on?"></label>
+<button id="aiPreviewButton">Prepare preview (no API call)</button>
+<p style="margin:6px 0">Review/edit the exact outgoing text below. Only the selected file and, for failure analysis, recent runner text are included. No DOM, screenshots, traces, other files or authentication state are attached. Secret masking is best effort.</p>
+<textarea id="aiPreview" aria-label="AI request preview" maxlength="12000" style="width:100%;min-height:100px;font:12px Consolas,monospace" placeholder="Prepare a preview first; remove any private data before sending."></textarea>
+<label><input type="checkbox" id="aiApprove"> I reviewed this text and approve sending it to the selected provider.</label>
+<button id="aiSend" disabled>Send reviewed request</button><span id="aiMessage" role="status"></span>
+<textarea id="aiResult" aria-label="AI suggestion" readonly style="display:block;width:100%;min-height:120px;margin-top:8px;font:12px Consolas,monospace" placeholder="AI suggestions appear here. Nothing is applied or executed automatically."></textarea>
+<button id="aiCopy">Copy suggestion</button><button id="aiLoad" disabled>Load proposed code into editor</button>
+<span>Review proposed code. Apply it, save with validation, then run explicitly.</span>
+</div></details>
+<pre id="runOutput" hidden style="max-height:220px;overflow:auto;padding:12px;white-space:pre-wrap"></pre>
+<div id="toast"></div>
+<script>
+(function () {
+  var MODES = [['record','Record'],['actions','Actions'],['assert','Assert'],['waitfor','Wait for'],['inspect','Inspect'],['hover','Hover'],['scroll','Scroll'],['drag','Drag'],['pause','Pause']];
+  var S = null;
+  var currentFile = null;
+  var codeDirty = false;
+  var aiInitialized=false, aiFile=null, aiRequestedTask=null, aiTruncated=false, aiSettingsDirty=false, aiStatusSeen=null, aiCooldownUntil=0;
+  var cardCache = {};
+  var $ = function (id) { return document.getElementById(id); };
+
+  function post(path, body, method) {
+    return fetch(path, { method: method || 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body || {}) })
+      .then(function (r) { return r.json(); });
+  }
+  function toast(msg, ms) {
+    var t = $('toast');
+    t.textContent = msg;
+    t.style.display = 'block';
+    clearTimeout(toast.timer);
+    toast.timer = setTimeout(function () { t.style.display = 'none'; }, ms || 4000);
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function color(score) { return score >= 75 ? 'green' : score >= 45 ? 'amber' : 'red'; }
+
+  function highlight(code) {
+    var re = /(\/\/[^\n]*)|('(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"|`(?:\\.|[^`\\])*`)|(\/(?![\/*])(?:\\.|[^\/\\\n])+\/[gimsuy]*)|\b(import|from|export|class|readonly|constructor|private|async|await|const|let|return|new|type|test|expect|if|else|try|catch)\b|\b(\d+(?:\.\d+)?)\b/g;
+    var out = '', last = 0, m;
+    while ((m = re.exec(code))) {
+      out += esc(code.slice(last, m.index));
+      var cls = m[1] ? 'c' : m[2] || m[3] ? 's' : m[4] ? 'k' : 'n';
+      out += '<span class="' + cls + '">' + esc(m[0]) + '</span>';
+      last = re.lastIndex;
+    }
+    return out + esc(code.slice(last));
+  }
+
+  function describe(s) {
+    var t = s.target;
+    var what = t ? t.describe + (t.anchor ? ' in "' + t.anchor + '"' : '') : '';
+    switch (s.kind) {
+      case 'goto': return 'Open ' + (s.value || s.page.url);
+      case 'copyText': return 'Copy value/text from ' + what;
+      case 'pasteText': return 'Paste recorder clipboard into ' + what;
+      case 'fill': return (s.inputMode === 'append' ? 'Append text to ' : s.inputMode === 'type' ? 'Type into ' : 'Fill ') + what + (s.secret ? ' (secret)' : ' with "' + (s.value || '') + '"');
+      case 'select': return 'Select "' + (s.values || []).join(', ') + '" in ' + what;
+      case 'press': return 'Press ' + s.value + (t ? ' in ' + what : '');
+      case 'upload': return 'Upload ' + (s.files || []).join(', ') + ' to ' + what;
+      case 'drag': return 'Drag ' + what + ' to ' + (s.target2 ? s.target2.describe : '');
+      case 'assert': return 'Check ' + (t ? what : 'page') + ': ' + s.assertion.type + (s.assertion.expected !== undefined ? ' "' + s.assertion.expected + '"' : '');
+      case 'waitVisible': return 'Wait until ' + what + ' is visible';
+      case 'waitHidden': return 'Wait until ' + what + ' is hidden';
+      default: return s.kind.charAt(0).toUpperCase() + s.kind.slice(1) + ' ' + what;
+    }
+  }
+
+  function stepCard(s, i) {
+    var card = document.createElement('div');
+    card.className = 'card';
+    card.draggable = i > 0;
+    card.dataset.id = s.id;
+    var h = '<div class="top"><span class="num">' + (i + 1) + '</span><span class="kind">' + esc(s.kind) + '</span>' +
+      '<span class="title" title="' + esc(describe(s)) + '">' + esc(describe(s)) + '</span>' +
+      (i > 0 ? '<button class="del" data-act="delete" title="Delete step">✕</button>' : '') + '</div>';
+    if (s.target) {
+      h += '<div class="loc"><span class="score ' + color(s.target.score) + '">' + s.target.score + '</span><code>' +
+        esc(s.target.kind === 'coords' ? 'coordinate click (no unique locator)' : s.target.code) + '</code></div>';
+    }
+    (s.warnings || []).forEach(function (w) { h += '<div class="warn">' + esc(w) + '</div>'; });
+    var row = [];
+    if (s.target && s.kind !== 'assert' && s.kind !== 'waitVisible' && s.kind !== 'waitHidden') {
+      row.push('<label><input type="checkbox" data-act="pre"' + (s.preAssert ? ' checked' : '') + '> pre-assertion</label>');
+    }
+    if (s.coords) {
+      row.push('<label>click <select data-act="style">' + ['locator', 'fallback', 'coords'].map(function (v) {
+        return '<option value="' + v + '"' + (s.clickStyle === v ? ' selected' : '') + '>' + { locator: 'locator', fallback: 'locator + point', coords: 'point only' }[v] + '</option>';
+      }).join('') + '</select></label>');
+    }
+    if (s.alternatives && s.alternatives.length) {
+      row.push('<label>use <select data-act="alt"><option value="">alternative locator…</option>' + s.alternatives.map(function (a, k) {
+        return '<option value="' + k + '">[' + a.score + '] ' + esc(a.code.replace(/^page\./, '')) + '</option>';
+      }).join('') + '</select></label>');
+    }
+    if (s.kind === 'fill') {
+      row.push('<label>Entry method <select data-act="inputMode">' + [['fill','Replace / paste'],['type','Type characters'],['append','Append']].map(function (m) { return '<option value="'+m[0]+'"'+((s.inputMode||'fill')===m[0]?' selected':'')+'>'+m[1]+'</option>'; }).join('') + '</select></label>');
+      row.push('<label>Typing delay (ms) <input type="number" min="0" max="1000" data-act="typingDelay" value="' + (s.typingDelay || 0) + '"></label>');
+      if (!s.secret) row.push('<label style="width:100%">Text <textarea data-act="value" aria-label="Recorded text" style="width:100%;min-height:52px">' + esc(s.value || '') + '</textarea></label>');
+      else row.push('<label>Replace secret <input type="password" data-act="value" autocomplete="new-password" placeholder="Enter a replacement secret"></label><span>Saved files use a TEST_* environment variable.</span>');
+    }
+    if (s.target && s.target.code) row.push('<button data-act="copyLocator">Copy locator</button>');
+    if (i > 0) row.push('<button data-act="duplicate">Duplicate step</button>');
+    if (s.dialog) {
+      row.push('<label>dialog "' + esc(s.dialog.message.slice(0, 30)) + '" <select data-act="dialog"><option value="accept"' + (s.dialog.action === 'accept' ? ' selected' : '') + '>accept</option><option value="dismiss"' + (s.dialog.action === 'dismiss' ? ' selected' : '') + '>dismiss</option></select></label>');
+    }
+    if (s.settleMs !== undefined && s.kind !== 'fill') row.push('<span class="settle">settled in ' + (s.settleMs / 1000).toFixed(2) + ' s' + (s.settleTimedOut ? ' (timeout)' : '') + '</span>');
+    if (row.length) h += '<div class="row">' + row.join('') + '</div>';
+    if (s.suggestions && s.suggestions.length) {
+      h += '<div class="sugs"><div class="h">Suggested checks</div>' + s.suggestions.map(function (g) {
+        var code = g.assertion.target ? g.assertion.target.code : 'page';
+        return '<label class="sug"><input type="checkbox" data-act="sug" data-sid="' + esc(g.id) + '"' + (g.accepted ? ' checked' : '') + '><span>' + esc(g.label) +
+          '<code>' + esc(g.assertion.type + ' → ' + code) + '</code></span></label>';
+      }).join('') + '</div>';
+    }
+    h += '<input type="text" class="note" data-act="note" placeholder="note for this step (becomes a comment)" value="' + esc(s.comment || '') + '">';
+    card.innerHTML = h;
+    return card;
+  }
+
+  function renderSteps() {
+    if (dragId) return; // keep the dragged DOM node alive during incoming state updates
+    var box = $('steps');
+    var focused = document.activeElement && box.contains(document.activeElement) ? document.activeElement.closest('.card') : null;
+    var html = [];
+    if (S.lastError) html.push('<div class="err">Last action could not be recorded: ' + esc(S.lastError) + '</div>');
+    if (!S.steps.length) { box.innerHTML = html.join('') + '<div class="empty">No steps yet. Use the page in the other window.</div>'; return; }
+    var frag = document.createDocumentFragment();
+    if (S.lastError) { var e = document.createElement('div'); e.className = 'err'; e.textContent = 'Last action could not be recorded: ' + S.lastError; frag.appendChild(e); }
+    S.steps.forEach(function (s, i) {
+      var key = JSON.stringify(s) + i;
+      if (focused && focused.dataset.id === s.id) { frag.appendChild(focused); return; }
+      var cached = cardCache[s.id];
+      var card = cached && cached.key === key ? cached.el : stepCard(s, i);
+      cardCache[s.id] = { key: key, el: card };
+      frag.appendChild(card);
+    });
+    var atBottom = box.scrollTop + box.clientHeight >= box.scrollHeight - 30;
+    box.innerHTML = '';
+    box.appendChild(frag);
+    if (atBottom) box.scrollTop = box.scrollHeight;
+  }
+
+  function renderFiles() {
+    var tabs = $('tabs');
+    var files = S.files || [];
+    if (!files.some(function (f) { return f.path === currentFile; })) currentFile = files.length ? files[0].path : null;
+    tabs.innerHTML = '';
+    files.forEach(function (f) {
+      var b = document.createElement('button');
+      b.className = 'tab' + (f.path === currentFile ? ' on' : '');
+      b.textContent = f.path;
+      b.onclick = function () { if(codeDirty) return toast('Apply the code edit before switching files.'); currentFile = f.path; renderFiles(); };
+      tabs.appendChild(b);
+    });
+    var file = files.filter(function (f) { return f.path === currentFile; })[0];
+    var pre = $('preview');
+    var top = pre.scrollTop;
+    pre.innerHTML = S.genError ? esc('Code generation failed: ' + S.genError) : file ? highlight(file.content) : '';
+    pre.scrollTop = top;
+    var editor=$('codeEditor');
+    if (!codeDirty && document.activeElement !== editor) { editor.value=file?file.content:'';editor.dataset.path=currentFile||''; }
+    $('codeEditStatus').textContent=codeDirty?'Unapplied code edit':(S.editedFiles||[]).length?'Manual code edits active; step changes do not replace those files.':'';
+    $('editCode').disabled=!file || !/\.(ts|json)$/.test(file.path);
+
+  }
+
+  function renderAi() {
+    if(!S||!S.ai)return;
+    var ai=S.ai;
+    if(aiStatusSeen!==ai){aiStatusSeen=ai;aiCooldownUntil=Date.now()+ai.retryAfterSeconds*1000;}
+    var cooldown=Math.max(0,Math.ceil((aiCooldownUntil-Date.now())/1000));
+    if(!aiInitialized) {
+      $('aiEnabled').checked=ai.enabled;$('aiProvider').value=ai.provider;$('aiModel').value=ai.model;$('aiBase').value=ai.baseUrl;
+      $('aiTokens').value=ai.maxOutputTokens;$('aiBudget').value=ai.maxRequests;$('aiBaseLabel').hidden=ai.provider!=='compatible';aiInitialized=true;
+    }
+    $('aiStatus').textContent=ai.provider+' / '+(ai.model||'choose a model')+' | '+(aiSettingsDirty?'Unsaved settings — click Save AI settings. ': '')+(ai.busy?'Request in progress':ai.enabled&&ai.hasKey?'Configured (provider contacted only on Send)':'AI disabled or key missing')+' | requests '+ai.requestsUsed+'/'+ai.maxRequests+(cooldown?' | cooldown '+cooldown+'s':'');
+    $('aiSend').disabled=!aiRequestedTask||aiSettingsDirty||!ai.enabled||!ai.hasKey||ai.busy||!$('aiApprove').checked||!$('aiPreview').value.trim();
+    $('aiConfigure').disabled=ai.busy;$('aiClear').disabled=ai.busy;$('aiPreviewButton').disabled=ai.busy;$('aiTask').disabled=ai.busy;
+  }
+  function render() {
+    renderAi();
+    var fw = S.framework;
+    $('moduleLabel').hidden = !fw;
+    $('refreshModules').hidden = !fw;
+    $('runSaved').hidden = !fw;
+    if (fw) {
+      var moduleSelect = $('module');
+      moduleSelect.innerHTML = '<option value="">Choose a module</option>' + fw.modules.map(function (name) {
+        return '<option value="' + esc(name) + '">' + esc(name.replace(/-/g, ' ')) + '</option>';
+      }).join('');
+      moduleSelect.value = fw.module;
+      $('runSaved').disabled = !fw.savedFile || fw.run.running;
+      $('runSaved').title = fw.savedFile || 'Save a test first';
+      $('savedPath').textContent = fw.savedFile || '';
+      $('runOutput').hidden = !fw.run.running && !fw.run.output;
+      $('runOutput').textContent = (fw.run.running ? 'Running saved test...\n' : fw.run.code === null ? '' : 'Runner exit code: ' + fw.run.code + '\n') + fw.run.output;
+    }
+    $('status').textContent = S.status;
+    $('status').className = 'pill ' + S.status;
+    $('url').textContent = S.url || '–';
+    $('url').title = S.url || '';
+    $('pageObject').textContent = S.pageObject || '–';
+    $('settle').textContent = S.settle ? (S.settle.ms / 1000).toFixed(2) + ' s' + (S.settle.timedOut ? ' (timeout)' : '') : '–';
+    $('outDir').textContent = 'saves to ' + S.outDir;
+    $('clickStyle').value = S.clickStyle || 'locator';
+    if (document.activeElement !== $('flowName')) $('flowName').value = S.options.flowName;
+    $('style').value = S.options.style;
+    $('ratio').checked = !!S.options.coordsAsRatio;
+    var modes = $('modes');
+    if (!modes.children.length) {
+      MODES.forEach(function (m) {
+        var b = document.createElement('button');
+        b.textContent = m[1];
+        b.dataset.mode = m[0];
+        b.onclick = function () { post('/api/mode', { mode: m[0] }); };
+        modes.appendChild(b);
+      });
+    }
+    Array.prototype.forEach.call(modes.children, function (b) { b.classList.toggle('on', b.dataset.mode === S.mode); });
+    if (S.lastSave) $('saveInfo').textContent = 'Last saved ' + new Date(S.lastSave.at).toLocaleTimeString();
+    renderSteps();
+    renderFiles();
+  }
+
+  // ---- step interactions (event delegation)
+  $('steps').addEventListener('change', function (e) {
+    var card = e.target.closest('.card');
+    if (!card) return;
+    var id = card.dataset.id, act = e.target.dataset.act;
+    if (act === 'value') post('/api/step/' + id, { value: e.target.value });
+    if (act === 'inputMode') post('/api/step/' + id, { inputMode: e.target.value });
+    if (act === 'typingDelay') post('/api/step/' + id, { typingDelay: Number(e.target.value) });
+    if (act === 'pre') post('/api/step/' + id, { preAssert: e.target.checked });
+    if (act === 'style') post('/api/step/' + id, { clickStyle: e.target.value });
+    if (act === 'sug') post('/api/step/' + id, { suggestion: { id: e.target.dataset.sid, accepted: e.target.checked } });
+    if (act === 'dialog') post('/api/step/' + id, { dialogAction: e.target.value });
+    if (act === 'alt' && e.target.value !== '') post('/api/step/' + id, { alternative: Number(e.target.value) });
+    if (act === 'note') post('/api/step/' + id, { comment: e.target.value });
+  });
+  $('steps').addEventListener('click', function (e) {
+    var act = e.target.dataset.act;
+    if (act === 'duplicate') { var duplicateCard=e.target.closest('.card');post('/api/step/'+duplicateCard.dataset.id+'/duplicate');return; }
+    if (act === 'copyLocator') { var locatorCard=e.target.closest('.card');var step=S.steps.find(function(s){return s.id===locatorCard.dataset.id;});navigator.clipboard.writeText(step.target.code).then(function(){toast('Locator copied');},function(){toast('Clipboard unavailable: select and copy the locator text.');});return; }
+    if (act !== 'delete') return;
+    var card = e.target.closest('.card');
+    fetch('/api/step/' + card.dataset.id, { method: 'DELETE' });
+  });
+  // drag to reorder
+  var dragId = null;
+  $('steps').addEventListener('dragstart', function (e) {
+    var card = e.target.closest && e.target.closest('.card');
+    if (!card) return;
+    dragId = card.dataset.id;
+    card.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', dragId);
+  });
+  $('steps').addEventListener('dragover', function (e) {
+    var card = e.target.closest && e.target.closest('.card');
+    if (!card || !dragId) return;
+    e.preventDefault();
+    Array.prototype.forEach.call(document.querySelectorAll('.card.over'), function (c) { c.classList.remove('over'); });
+    card.classList.add('over');
+  });
+  $('steps').addEventListener('drop', function (e) {
+    var card = e.target.closest && e.target.closest('.card');
+    if (!card || !dragId) return;
+    e.preventDefault();
+    var to = S.steps.findIndex(function (s) { return s.id === card.dataset.id; });
+    post('/api/step/' + dragId + '/move', { to: Math.max(1, to) });
+    dragId = null;
+  });
+  $('steps').addEventListener('dragend', function () {
+    dragId = null;
+    Array.prototype.forEach.call(document.querySelectorAll('.card.over,.card.dragging'), function (c) { c.classList.remove('over', 'dragging'); });
+  });
+
+  // ---- header and options
+  $('module').onchange = function () { post('/api/module', { module: this.value }).then(function (r) { if(r.error) toast(r.error); }); };
+  $('refreshModules').onclick = function () { post('/api/modules').then(function (r) { if(r.error) return toast(r.error); S=r; render(); }); };
+  $('runSaved').onclick = function () { post('/api/run').then(function (r) { if(r.error) toast(r.error); }); };
+  $('undo').onclick = function () { post('/api/undo'); };
+  $('clear').onclick = function () { if (confirm('Remove all recorded steps (the first page load is kept)?')) post('/api/clear'); };
+  $('clickStyle').onchange = function () { post('/api/click-style', { style: this.value }); };
+  $('save').onclick = function () {
+    (codeDirty ? applyCodeEdit() : Promise.resolve()).then(function () { return post('/api/options', { flowName: $('flowName').value, style: $('style').value, coordsAsRatio: $('ratio').checked }); }).then(function (r) { if (r.error) throw new Error(r.error); return post('/api/save'); }).then(function (r) {
+      if (!r.entries) return toast('Save failed: ' + (r.error || 'unknown error'));
+      toast('Saved\n' + r.entries.map(function (e) { return e.status.padEnd(20) + ' ' + e.file; }).join('\n'), 7000);
+    }).catch(function (e) { toast('Save failed: ' + e.message); });
+  };
+  $('debug').onclick = function () {
+    post('/api/debug').then(function (r) { toast(r.files ? 'Debug snapshot\n' + r.files.join('\n') : 'Failed: ' + r.error, 7000); });
+  };
+  $('flowName').onchange = function () { post('/api/options', { flowName: this.value }); };
+  $('style').onchange = function () { post('/api/options', { style: this.value }); };
+  $('ratio').onchange = function () { post('/api/options', { coordsAsRatio: this.checked }); };
+  function applyCodeEdit() {
+    return post('/api/code',{path:$('codeEditor').dataset.path,content:$('codeEditor').value}).then(function(r){
+      if(r.error) throw new Error(r.error);
+      codeDirty=false;S=r;render();
+    });
+  }
+  $('codeEditor').oninput=function(){codeDirty=true;$('codeEditStatus').textContent='Unapplied code edit';};
+  $('editCode').onclick=function(){
+    if(codeDirty) return toast('Apply the code edit before closing the editor.');
+    var opening=$('codeEditor').hidden;$('codeEditor').hidden=!opening;$('preview').hidden=opening;$('applyCode').hidden=!opening;
+    $('editCode').textContent=opening?'Preview code':'Edit code';if(opening)$('codeEditor').focus();
+  };
+  $('applyCode').onclick=function(){applyCodeEdit().then(function(){toast('Code edit applied. Saving validates TypeScript and imports.');}).catch(function(e){toast(e.message);});};
+  $('resetCode').onclick=function(){codeDirty=false;post('/api/code/reset').then(function(r){S=r;render();toast('Generated code restored.');});};
+  $('copy').onclick = function () {
+    var f = (S.files || []).filter(function (x) { return x.path === currentFile; })[0];
+    if (!f) return;
+    navigator.clipboard.writeText($('codeEditor').hidden?f.content:$('codeEditor').value).then(function () { toast('Copied ' + f.path, 1500); }, function () { toast('Copy failed: select the code and press Ctrl+C', 3000); });
+  };
+
+  // ---- optional AI: preview -> explicit send -> review; never apply automatically
+  $('aiProvider').onchange=function(){
+    aiSettingsDirty=true;$('aiModel').value=this.value==='gemini'?'gemini-2.5-flash-lite':'';$('aiKey').value='';
+    $('aiBaseLabel').hidden=this.value!=='compatible';
+    $('aiApprove').checked=false;renderAi();
+  };
+  ['aiEnabled','aiModel','aiBase','aiKey','aiTokens','aiBudget'].forEach(function(id){$(id).addEventListener('input',function(){aiSettingsDirty=true;$('aiApprove').checked=false;renderAi();});});
+  $('aiConfigure').onclick=function(){
+    post('/api/ai/configure',{enabled:$('aiEnabled').checked,provider:$('aiProvider').value,model:$('aiModel').value,baseUrl:$('aiBase').value,apiKey:$('aiKey').value,maxOutputTokens:Number($('aiTokens').value),maxRequests:Number($('aiBudget').value)}).then(function(r){
+      if(r.error)return toast(r.error,7000);S.ai=r.ai;aiSettingsDirty=false;$('aiKey').value='';$('aiApprove').checked=false;renderAi();toast('AI settings saved for this session. No API request was sent.');
+    }).catch(function(e){toast(e.message);});
+  };
+  $('aiClear').onclick=function(){post('/api/ai/clear').then(function(r){if(r.error)return toast(r.error);S.ai=r.ai;aiSettingsDirty=false;aiFile=null;aiRequestedTask=null;aiTruncated=false;$('aiKey').value='';$('aiEnabled').checked=false;$('aiApprove').checked=false;$('aiPreview').value='';$('aiResult').value='';$('aiLoad').disabled=true;renderAi();});};
+  $('aiPreviewButton').onclick=function(){
+    (codeDirty?applyCodeEdit():Promise.resolve()).then(function(){return post('/api/ai/preview',{task:$('aiTask').value,file:currentFile,note:$('aiNote').value});}).then(function(r){
+      if(r.error)return toast(r.error,7000);
+      aiFile=r.file;aiRequestedTask=$('aiTask').value;$('aiPreview').value=r.preview;$('aiApprove').checked=false;$('aiResult').value='';$('aiLoad').disabled=true;
+      $('aiMessage').textContent='Preview only; no API call made. '+r.preview.length+'/12000 characters.';renderAi();
+    }).catch(function(e){toast(e.message);});
+  };
+  $('aiApprove').onchange=renderAi;
+  $('aiPreview').oninput=function(){$('aiApprove').checked=false;renderAi();};
+  $('aiTask').onchange=function(){aiRequestedTask=null;$('aiApprove').checked=false;$('aiLoad').disabled=true;renderAi();};
+  $('aiSend').onclick=function(){
+    if(!aiRequestedTask)return toast('Prepare a new preview for this task.');
+    S.ai.busy=true;renderAi();$('aiSend').disabled=true;$('aiMessage').textContent='Sending reviewed text. Waiting for provider...';
+    post('/api/ai/ask',{task:aiRequestedTask,preview:$('aiPreview').value,approved:$('aiApprove').checked}).then(function(r){
+      if(r.ai)S.ai=r.ai;
+      $('aiApprove').checked=false;
+      if(r.error){$('aiMessage').textContent=r.error;renderAi();return;}
+      aiTruncated=r.result.truncated;$('aiResult').value=r.result.text;
+      $('aiLoad').disabled=aiRequestedTask!=='improve'||aiTruncated;
+      $('aiMessage').textContent=(r.result.cached?'Cached response (no new API call). ':'Response received. ')+(r.result.tokens===null?'':r.result.tokens+' provider-reported tokens. ')+(aiTruncated?'OUTPUT TRUNCATED: do not apply partial code.':'Review before using; AI changes have not been run.');renderAi();
+    }).catch(function(e){S.ai.busy=false;$('aiMessage').textContent=e.message;renderAi();});
+  };
+  $('aiCopy').onclick=function(){navigator.clipboard.writeText($('aiResult').value).then(function(){toast('Suggestion copied.');},function(){toast('Select the suggestion and press Ctrl+C.');});};
+  $('aiLoad').onclick=function(){
+    if(aiTruncated||aiRequestedTask!=='improve')return;
+    if(currentFile!==aiFile)return toast('Select the original file tab before loading its suggestion.');
+    if(codeDirty)return toast('Apply or copy your current unapplied code edit first.');
+    var text=$('aiResult').value.trim();
+    var fenced=text.match(/^```(?:typescript|ts|javascript|js|json)?\s*\n([\s\S]*?)\n```$/i);if(fenced)text=fenced[1];
+    $('codeEditor').hidden=false;$('preview').hidden=true;$('applyCode').hidden=false;$('editCode').textContent='Preview code';
+    $('codeEditor').dataset.path=currentFile;$('codeEditor').value=text;codeDirty=true;$('codeEditStatus').textContent='Unapplied AI proposal — review before saving';$('codeEditor').focus();
+  };
+  // ---- live state
+  function connect() {
+    var es = new EventSource('/events');
+    es.addEventListener('state', function (e) { S = JSON.parse(e.data); render(); });
+    es.onerror = function () { $('status').textContent = 'disconnected'; $('status').className = 'pill paused'; };
+  }
+  connect();
+  setInterval(renderAi,1000);
+})();
+</script>
+</body>
+</html>

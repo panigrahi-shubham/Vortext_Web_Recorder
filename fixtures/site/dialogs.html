@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Account settings</title><link rel="stylesheet" href="style.css"></head>
+<body><main>
+  <h1>Account settings</h1>
+  <button class="btn" type="button" id="del">Delete account</button>
+  <p id="out" role="status"></p>
+  <script>
+    document.getElementById('del').addEventListener('click', function () {
+      var ok = confirm('Are you sure you want to delete your account?');
+      document.getElementById('out').textContent = ok ? 'Account deleted' : 'Kept your account';
+    });
+  </script>
+</main></body>
+</html>

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Card form</title><link rel="stylesheet" href="style.css"></head>
+<body>
+  <form id="card" class="login-box" style="margin:10px">
+    <label for="holder">Card holder</label><input id="holder" autocomplete="off">
+    <button class="btn" type="submit">Pay now</button>
+    <p id="result" role="status"></p>
+  </form>
+  <script>
+    document.getElementById('card').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = document.getElementById('holder').value;
+      fetch('/api/slow?ms=300').then(function () {
+        document.getElementById('result').textContent = 'Payment accepted for ' + name;
+      });
+    });
+  </script>
+</body>
+</html>

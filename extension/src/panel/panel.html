@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vortex Locator Scout</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <header>
+    <div class="top">
+      <button id="pick" class="primary" title="Toggle picker (Alt+Shift+L)">Pick element</button>
+      <div class="segmented" id="format" role="group" aria-label="Output format">
+        <button data-format="playwright">Playwright TS</button>
+        <button data-format="selenium">Selenium Java</button>
+      </div>
+    </div>
+    <nav id="tabs">
+      <button data-tab="inspect">Inspect</button>
+      <button data-tab="collected">Collected <span id="count" class="pill">0</span></button>
+      <button data-tab="scan">Scan</button>
+      <button data-tab="verify">Verify</button>
+      <button data-tab="settings" title="Settings">Settings</button>
+    </nav>
+  </header>
+  <main id="view"></main>
+  <div id="status" role="status"></div>
+  <script src="panel.js"></script>
+</body>
+</html>

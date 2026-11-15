@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Demo Shop - Products</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header class="top">
+  <strong>Demo Shop</strong>
+  <a class="cart-link" href="cart.html" aria-label="Cart">&#128722;<span class="cart-badge" data-testid="cart-badge" hidden>0</span></a>
+</header>
+<main>
+  <h1 class="title">Products</h1>
+  <label>Sort products
+    <select id="sort">
+      <option value="name">Name (A to Z)</option>
+      <option value="price">Price (low to high)</option>
+    </select>
+  </label>
+  <span class="loading-spinner" role="progressbar" aria-label="Loading" hidden>Loading...</span>
+  <ul class="inventory-list" id="inventory"></ul>
+</main>
+<div id="toast" role="status" hidden></div>
+<script src="app.js"></script>
+<script>
+  document.getElementById('sort').addEventListener('change', renderInventory);
+  renderInventory();
+</script>
+</body>
+</html>

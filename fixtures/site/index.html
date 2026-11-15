@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Demo Shop - Login</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<main>
+  <form class="login-box" id="login-form">
+    <h1>Demo Shop</h1>
+    <input id="user-name" name="user-name" placeholder="Username" autocomplete="username">
+    <input id="password" name="password" type="password" placeholder="Password" autocomplete="current-password">
+    <p class="error-message" role="alert" hidden></p>
+    <button class="btn" type="submit">Login</button>
+    <p class="hint">Use <b>standard_user</b> / <b>secret_sauce</b></p>
+  </form>
+</main>
+<script>
+  document.getElementById('login-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var u = document.getElementById('user-name').value;
+    var p = document.getElementById('password').value;
+    var err = document.querySelector('.error-message');
+    if (u === 'standard_user' && p === 'secret_sauce') {
+      localStorage.setItem('user', u);
+      location.href = 'inventory.html';
+    } else {
+      err.textContent = 'Epic sadface: Username and password do not match any user in this service';
+      err.hidden = false;
+    }
+  });
+</script>
+</body>
+</html>

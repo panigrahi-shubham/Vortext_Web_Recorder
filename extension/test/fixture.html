@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head><title>Products | Seller Panel</title></head>
+<body>
+<nav class="side-nav">
+  <a href="/dashboard" class="nav-item"><svg class="ico"><path d="M0 0"/></svg><span>Dashboard</span></a>
+  <a href="/profile" class="nav-item"><span>Profile</span></a>
+  <a href="/leads" class="nav-item"><span>Lead Manager</span><span class="badge">71</span></a>
+  <a href="/products" class="nav-item active"><span>Products</span></a>
+  <a href="/settings" class="nav-item"><span>Settings</span></a>
+</nav>
+<main id="content">
+  <div class="tabs" role="tablist">
+    <button role="tab" class="tab css-1x2y3z">Active (5675)</button>
+    <button role="tab" class="tab css-9k8j7h">Inactive (733)</button>
+  </div>
+  <div class="toolbar">
+    <button class="btn btn-primary" id="ember1423">Add Product</button>
+    <button class="btn">Add by Photo</button>
+    <button class="btn">Quick Add</button>
+    <input type="text" placeholder="Search Products" name="q">
+    <label for="sortSel">Sort by</label>
+    <select id="sortSel"><option>Recent Modified</option><option>Name</option></select>
+  </div>
+  <div class="filters">
+    <a href="#" class="filter">No Category (2176)</a>
+    <a href="#" class="filter">No Price (1235)</a>
+    <a href="#" class="filter">Incorrect Price (25)</a>
+  </div>
+  <div class="product-list">
+    <div class="product-card" data-id="883411">
+      <h3 class="product-title">Router</h3>
+      <span class="edit-icon" onclick="edit()"><svg viewBox="0 0 10 10"><path d="M1 1"/></svg></span>
+      <div class="price">₹ 250<span class="unit">/Person</span></div>
+      <div class="specs">
+        <span class="chip" onclick="add()">+ Speed</span>
+        <span class="chip" onclick="add()">+ Frequency</span>
+      </div>
+      <button class="kebab" aria-haspopup="true"><i class="dots"></i></button>
+      <input type="checkbox" class="select-row">
+    </div>
+    <div class="product-card" data-id="883412">
+      <h3 class="product-title">Hero Passion Xpro Bike</h3>
+      <span class="edit-icon" onclick="edit()"><svg viewBox="0 0 10 10"><path d="M1 1"/></svg></span>
+      <div class="price">₹ 4,200<span class="unit">/Piece</span></div>
+      <div class="specs">
+        <span class="chip" onclick="add()">+ Speed</span>
+        <span class="chip" onclick="add()">+ Mileage</span>
+      </div>
+      <button class="kebab" aria-haspopup="true"><i class="dots"></i></button>
+      <input type="checkbox" class="select-row">
+    </div>
+    <div class="product-card" data-id="883413">
+      <h3 class="product-title">Router Pro</h3>
+      <span class="edit-icon" onclick="edit()"><svg viewBox="0 0 10 10"><path d="M1 1"/></svg></span>
+      <div class="price">₹ 900<span class="unit">/Piece</span></div>
+      <div class="specs"><span class="chip" onclick="add()">+ Speed</span></div>
+      <button class="kebab" aria-haspopup="true"><i class="dots"></i></button>
+      <input type="checkbox" class="select-row">
+    </div>
+  </div>
+  <table id="orders">
+    <thead><tr><th>Order</th><th>Buyer</th><th></th></tr></thead>
+    <tbody>
+      <tr><td>A-1</td><td>Asha Traders</td><td><button>View</button></td></tr>
+      <tr><td>A-2</td><td>Blue Ocean Ltd</td><td><button>View</button></td></tr>
+    </tbody>
+  </table>
+  <form id="login">
+    <label for="email">Email address</label><input id="email" type="email">
+    <label>Password <input type="password" name="pwd"></label>
+    <button type="submit" data-testid="login-submit">Sign in</button>
+    <a href="/forgot">Forgot password?</a>
+  </form>
+  <div id="host"></div>
+</main>
+</body>
+</html>

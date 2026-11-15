@@ -1,0 +1,3584 @@
+{
+  "tool": "tphub-web-recorder",
+  "version": 1,
+  "savedAt": "2026-10-20T07:41:08.531Z",
+  "options": {
+    "flowName": "standard user buys a backpack",
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "baseURL": "http://127.0.0.1:4900",
+    "style": "pom",
+    "keepSecrets": false,
+    "outDirFromCwd": "tests"
+  },
+  "steps": [
+    {
+      "id": "step-1",
+      "kind": "goto",
+      "target": null,
+      "page": {
+        "url": "http://127.0.0.1:4900/",
+        "title": "Demo Shop - Login",
+        "heading": "Demo Shop",
+        "tab": 0
+      },
+      "preAssert": false,
+      "clickStyle": "locator",
+      "suggestions": [],
+      "warnings": [],
+      "createdAt": 1792482056782,
+      "value": "http://127.0.0.1:4900/",
+      "settleMs": 328,
+      "settleTimedOut": false
+    },
+    {
+      "id": "step-2",
+      "kind": "fill",
+      "target": {
+        "chain": {
+          "frames": [],
+          "parts": [
+            {
+              "kind": "role",
+              "role": "textbox",
+              "name": "Username"
+            }
+          ]
+        },
+        "code": "page.getByRole('textbox', { name: 'Username' })",
+        "score": 90,
+        "kind": "role",
+        "warnings": [],
+        "role": "textbox",
+        "name": "Username",
+        "tag": "input",
+        "text": "",
+        "inputType": "text",
+        "label": null,
+        "placeholder": "Username",
+        "testId": null,
+        "nameAttr": "user-name",
+        "anchor": null,
+        "describe": "textbox \"Username\"",
+        "rect": {
+          "x": 480,
+          "y": 202,
+          "width": 320,
+          "height": 40
+        }
+      },
+      "page": {
+        "url": "http://127.0.0.1:4900/",
+        "title": "Demo Shop - Login",
+        "heading": "Demo Shop",
+        "tab": 0
+      },
+      "preAssert": true,
+      "clickStyle": "locator",
+      "suggestions": [],
+      "warnings": [],
+      "createdAt": 1792482056953,
+      "alternatives": [
+        {
+          "kind": "role",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "textbox",
+                "name": "Username",
+                "exact": true
+              }
+            ]
+          },
+          "base": 89,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 89,
+          "code": "page.getByRole('textbox', { name: 'Username', exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "placeholder",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "placeholder",
+                "value": "Username"
+              }
+            ]
+          },
+          "base": 85,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 85,
+          "code": "page.getByPlaceholder('Username')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "placeholder",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "placeholder",
+                "value": "Username",
+                "exact": true
+              }
+            ]
+          },
+          "base": 84,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 84,
+          "code": "page.getByPlaceholder('Username', { exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "css",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "css",
+                "selector": "#user-name"
+              }
+            ]
+          },
+          "base": 45,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "CSS selector: breaks when the markup changes. Ask developers for a test id."
+          ],
+          "fromAncestor": 0,
+          "score": 45,
+          "code": "page.locator('#user-name')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "css",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "css",
+                "selector": "input[name=\"user-name\"]"
+              }
+            ]
+          },
+          "base": 43,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "CSS selector: breaks when the markup changes. Ask developers for a test id."
+          ],
+          "fromAncestor": 0,
+          "score": 43,
+          "code": "page.locator('input[name=\"user-name\"]')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        }
+      ],
+      "value": "standard_user",
+      "secret": false,
+      "settleMs": 1
+    },
+    {
+      "id": "step-3",
+      "kind": "fill",
+      "target": {
+        "chain": {
+          "frames": [],
+          "parts": [
+            {
+              "kind": "role",
+              "role": "textbox",
+              "name": "Password"
+            }
+          ]
+        },
+        "code": "page.getByRole('textbox', { name: 'Password' })",
+        "score": 90,
+        "kind": "role",
+        "warnings": [],
+        "role": "textbox",
+        "name": "Password",
+        "tag": "input",
+        "text": "",
+        "inputType": "password",
+        "label": null,
+        "placeholder": "Password",
+        "testId": null,
+        "nameAttr": "password",
+        "anchor": null,
+        "describe": "textbox \"Password\"",
+        "rect": {
+          "x": 480,
+          "y": 254,
+          "width": 320,
+          "height": 40
+        }
+      },
+      "page": {
+        "url": "http://127.0.0.1:4900/",
+        "title": "Demo Shop - Login",
+        "heading": "Demo Shop",
+        "tab": 0
+      },
+      "preAssert": true,
+      "clickStyle": "locator",
+      "suggestions": [],
+      "warnings": [
+        "looks like a secret: it will be masked in the fixtures file and read from an environment variable"
+      ],
+      "createdAt": 1792482057023,
+      "alternatives": [
+        {
+          "kind": "role",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "textbox",
+                "name": "Password",
+                "exact": true
+              }
+            ]
+          },
+          "base": 89,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 89,
+          "code": "page.getByRole('textbox', { name: 'Password', exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "placeholder",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "placeholder",
+                "value": "Password"
+              }
+            ]
+          },
+          "base": 85,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 85,
+          "code": "page.getByPlaceholder('Password')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "placeholder",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "placeholder",
+                "value": "Password",
+                "exact": true
+              }
+            ]
+          },
+          "base": 84,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 84,
+          "code": "page.getByPlaceholder('Password', { exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "css",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "css",
+                "selector": "#password"
+              }
+            ]
+          },
+          "base": 45,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "CSS selector: breaks when the markup changes. Ask developers for a test id."
+          ],
+          "fromAncestor": 0,
+          "score": 45,
+          "code": "page.locator('#password')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "css",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "css",
+                "selector": "input[name=\"password\"]"
+              }
+            ]
+          },
+          "base": 43,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "CSS selector: breaks when the markup changes. Ask developers for a test id."
+          ],
+          "fromAncestor": 0,
+          "score": 43,
+          "code": "page.locator('input[name=\"password\"]')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        }
+      ],
+      "value": "",
+      "secret": true,
+      "settleMs": 2
+    },
+    {
+      "id": "step-4",
+      "kind": "click",
+      "target": {
+        "chain": {
+          "frames": [],
+          "parts": [
+            {
+              "kind": "role",
+              "role": "button",
+              "name": "Login"
+            }
+          ]
+        },
+        "code": "page.getByRole('button', { name: 'Login' })",
+        "score": 90,
+        "kind": "role",
+        "warnings": [],
+        "role": "button",
+        "name": "Login",
+        "tag": "button",
+        "text": "Login",
+        "inputType": null,
+        "label": null,
+        "placeholder": null,
+        "testId": null,
+        "nameAttr": null,
+        "anchor": null,
+        "describe": "button \"Login\"",
+        "rect": {
+          "x": 480,
+          "y": 306,
+          "width": 320,
+          "height": 36
+        }
+      },
+      "page": {
+        "url": "http://127.0.0.1:4900/",
+        "title": "Demo Shop - Login",
+        "heading": "Demo Shop",
+        "tab": 0
+      },
+      "preAssert": true,
+      "clickStyle": "locator",
+      "suggestions": [
+        {
+          "id": "step-4-s1",
+          "assertion": {
+            "type": "urlMatches",
+            "target": null,
+            "expected": "\\/inventory\\.html",
+            "regex": true
+          },
+          "label": "URL changed to /inventory.html",
+          "reason": "navigated",
+          "score": 95,
+          "accepted": true,
+          "pageUrl": "http://127.0.0.1:4900/inventory.html"
+        },
+        {
+          "id": "step-4-s3",
+          "assertion": {
+            "type": "visible",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "role",
+                    "role": "heading",
+                    "name": "Products"
+                  }
+                ]
+              },
+              "code": "page.getByRole('heading', { name: 'Products' })",
+              "score": 90,
+              "kind": "role",
+              "warnings": [],
+              "role": "heading",
+              "name": "Products",
+              "tag": "h1",
+              "text": "Products",
+              "inputType": null,
+              "label": null,
+              "placeholder": null,
+              "testId": null,
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "heading \"Products\"",
+              "rect": {
+                "x": 160,
+                "y": 93,
+                "width": 960,
+                "height": 39
+              }
+            }
+          },
+          "label": "heading 'Products' appeared",
+          "reason": "appeared",
+          "score": 83,
+          "accepted": false,
+          "pageUrl": "http://127.0.0.1:4900/inventory.html",
+          "elementKey": "body:1/main:1/h1:1"
+        },
+        {
+          "id": "step-4-s2",
+          "assertion": {
+            "type": "titleMatches",
+            "target": null,
+            "expected": "Demo Shop - Products",
+            "regex": false
+          },
+          "label": "title changed to 'Demo Shop - Products'",
+          "reason": "changed",
+          "score": 55,
+          "accepted": false,
+          "pageUrl": "http://127.0.0.1:4900/inventory.html"
+        }
+      ],
+      "warnings": [],
+      "createdAt": 1792482057171,
+      "coords": {
+        "x": 640,
+        "y": 323,
+        "vw": 1280,
+        "vh": 720
+      },
+      "alternatives": [
+        {
+          "kind": "role",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "button",
+                "name": "Login",
+                "exact": true
+              }
+            ]
+          },
+          "base": 89,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 89,
+          "code": "page.getByRole('button', { name: 'Login', exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "text",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "text",
+                "value": "Login",
+                "exact": true
+              }
+            ]
+          },
+          "base": 75,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 75,
+          "code": "page.getByText('Login', { exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "text",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "text",
+                "value": "Login"
+              }
+            ]
+          },
+          "base": 74,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 74,
+          "code": "page.getByText('Login')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "role",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "button"
+              }
+            ]
+          },
+          "base": 65,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "locator has no name; it is only unique while the page has one such element"
+          ],
+          "fromAncestor": 0,
+          "score": 65,
+          "code": "page.getByRole('button')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "coords",
+          "chain": {
+            "frames": [],
+            "parts": []
+          },
+          "base": 10,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "no unique locator found: falls back to a coordinate click, which breaks when the layout changes"
+          ],
+          "score": 10,
+          "code": "page.mouse.click(x, y)",
+          "verification": null,
+          "usable": true
+        }
+      ],
+      "settleMs": 316,
+      "settleTimedOut": false
+    },
+    {
+      "id": "step-5",
+      "kind": "click",
+      "target": {
+        "chain": {
+          "frames": [],
+          "parts": [
+            {
+              "kind": "role",
+              "role": "listitem"
+            },
+            {
+              "kind": "filter",
+              "hasText": "Trail Backpack"
+            },
+            {
+              "kind": "role",
+              "role": "button",
+              "name": "Add to cart"
+            }
+          ]
+        },
+        "code": "page.getByRole('listitem').filter({ hasText: 'Trail Backpack' }).getByRole('button', { name: 'Add to cart' })",
+        "score": 65,
+        "kind": "scoped",
+        "warnings": [],
+        "role": "button",
+        "name": "Add to cart",
+        "tag": "button",
+        "text": "Add to cart",
+        "inputType": null,
+        "label": null,
+        "placeholder": null,
+        "testId": null,
+        "nameAttr": null,
+        "anchor": "Trail Backpack",
+        "describe": "button \"Add to cart\"",
+        "rect": {
+          "x": 1004,
+          "y": 482,
+          "width": 104,
+          "height": 36
+        }
+      },
+      "page": {
+        "url": "http://127.0.0.1:4900/inventory.html",
+        "title": "Demo Shop - Products",
+        "heading": "Products",
+        "tab": 0
+      },
+      "preAssert": true,
+      "clickStyle": "locator",
+      "suggestions": [
+        {
+          "id": "step-5-s1",
+          "assertion": {
+            "type": "textEquals",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "testId",
+                    "value": "cart-badge"
+                  }
+                ]
+              },
+              "code": "page.getByTestId('cart-badge')",
+              "score": 100,
+              "kind": "testId",
+              "warnings": [],
+              "role": null,
+              "name": "",
+              "tag": "span",
+              "text": "1",
+              "inputType": null,
+              "label": null,
+              "placeholder": null,
+              "testId": "cart-badge",
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "test id \"cart-badge\"",
+              "rect": {
+                "x": 1239,
+                "y": 19,
+                "width": 17,
+                "height": 15
+              }
+            },
+            "expected": "1"
+          },
+          "label": "cart-badge '1' appeared",
+          "reason": "appeared",
+          "score": 84,
+          "accepted": true,
+          "pageUrl": "http://127.0.0.1:4900/inventory.html",
+          "elementKey": "body:1/header:1/a:1/span:1"
+        },
+        {
+          "id": "step-5-s2",
+          "assertion": {
+            "type": "textContains",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "role",
+                    "role": "status"
+                  }
+                ]
+              },
+              "code": "page.getByRole('status')",
+              "score": 65,
+              "kind": "role",
+              "warnings": [
+                "locator has no name; it is only unique while the page has one such element"
+              ],
+              "role": "status",
+              "name": "",
+              "tag": "div",
+              "text": "Added Trail Backpack to your cart",
+              "inputType": null,
+              "label": null,
+              "placeholder": null,
+              "testId": null,
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "status",
+              "rect": {
+                "x": 971,
+                "y": 660,
+                "width": 289,
+                "height": 40
+              }
+            },
+            "expected": "Added Trail Backpack to your cart"
+          },
+          "label": "toast 'Added Trail Backpack to your c…' appeared",
+          "reason": "appeared",
+          "score": 82,
+          "accepted": false,
+          "pageUrl": "http://127.0.0.1:4900/inventory.html",
+          "elementKey": "body:1/div:1"
+        },
+        {
+          "id": "step-5-s3",
+          "assertion": {
+            "type": "visible",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "role",
+                    "role": "button",
+                    "name": "Remove"
+                  }
+                ]
+              },
+              "code": "page.getByRole('button', { name: 'Remove' })",
+              "score": 90,
+              "kind": "role",
+              "warnings": [],
+              "role": "button",
+              "name": "Remove",
+              "tag": "button",
+              "text": "Remove",
+              "inputType": null,
+              "label": null,
+              "placeholder": null,
+              "testId": null,
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "button \"Remove\"",
+              "rect": {
+                "x": 1027,
+                "y": 482,
+                "width": 81,
+                "height": 36
+              }
+            }
+          },
+          "label": "button text changed to 'Remove'",
+          "reason": "changed",
+          "score": 78,
+          "accepted": false,
+          "pageUrl": "http://127.0.0.1:4900/inventory.html",
+          "elementKey": "body:1/main:1/ul:1/li:6/div:1/div:1/button:1"
+        }
+      ],
+      "warnings": [],
+      "createdAt": 1792482058384,
+      "coords": {
+        "x": 1055,
+        "y": 499,
+        "vw": 1280,
+        "vh": 720
+      },
+      "alternatives": [
+        {
+          "kind": "nth",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "button",
+                "name": "Add to cart"
+              },
+              {
+                "kind": "nth",
+                "index": 5
+              }
+            ]
+          },
+          "base": 40,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "position-based locator (.nth): breaks when items are added, removed or reordered"
+          ],
+          "fromAncestor": 0,
+          "score": 40,
+          "code": "page.getByRole('button', { name: 'Add to cart' }).nth(5)",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "nth",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "text",
+                "value": "Add to cart",
+                "exact": true
+              },
+              {
+                "kind": "nth",
+                "index": 5
+              }
+            ]
+          },
+          "base": 40,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "position-based locator (.nth): breaks when items are added, removed or reordered"
+          ],
+          "fromAncestor": 0,
+          "score": 40,
+          "code": "page.getByText('Add to cart', { exact: true }).nth(5)",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "nth",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "button"
+              },
+              {
+                "kind": "nth",
+                "index": 5
+              }
+            ]
+          },
+          "base": 40,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "position-based locator (.nth): breaks when items are added, removed or reordered"
+          ],
+          "fromAncestor": 0,
+          "score": 40,
+          "code": "page.getByRole('button').nth(5)",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "nth",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "css",
+                "selector": "div.pricebar"
+              },
+              {
+                "kind": "nth",
+                "index": 5
+              }
+            ]
+          },
+          "base": 40,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "position-based locator (.nth): breaks when items are added, removed or reordered"
+          ],
+          "fromAncestor": 1,
+          "score": 35,
+          "code": "page.locator('div.pricebar').nth(5)",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "coords",
+          "chain": {
+            "frames": [],
+            "parts": []
+          },
+          "base": 10,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "no unique locator found: falls back to a coordinate click, which breaks when the layout changes"
+          ],
+          "score": 10,
+          "code": "page.mouse.click(x, y)",
+          "verification": null,
+          "usable": true
+        }
+      ],
+      "settleMs": 738,
+      "settleTimedOut": false
+    },
+    {
+      "id": "step-6",
+      "kind": "click",
+      "target": {
+        "chain": {
+          "frames": [],
+          "parts": [
+            {
+              "kind": "role",
+              "role": "listitem"
+            },
+            {
+              "kind": "filter",
+              "hasText": "Bike Light"
+            },
+            {
+              "kind": "role",
+              "role": "button",
+              "name": "Add to cart"
+            }
+          ]
+        },
+        "code": "page.getByRole('listitem').filter({ hasText: 'Bike Light' }).getByRole('button', { name: 'Add to cart' })",
+        "score": 65,
+        "kind": "scoped",
+        "warnings": [],
+        "role": "button",
+        "name": "Add to cart",
+        "tag": "button",
+        "text": "Add to cart",
+        "inputType": null,
+        "label": null,
+        "placeholder": null,
+        "testId": null,
+        "nameAttr": null,
+        "anchor": "Bike Light",
+        "describe": "button \"Add to cart\"",
+        "rect": {
+          "x": 679,
+          "y": 314,
+          "width": 104,
+          "height": 36
+        }
+      },
+      "page": {
+        "url": "http://127.0.0.1:4900/inventory.html",
+        "title": "Demo Shop - Products",
+        "heading": "Products",
+        "tab": 0
+      },
+      "preAssert": true,
+      "clickStyle": "locator",
+      "suggestions": [
+        {
+          "id": "step-6-s1",
+          "assertion": {
+            "type": "textEquals",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "testId",
+                    "value": "cart-badge"
+                  }
+                ]
+              },
+              "code": "page.getByTestId('cart-badge')",
+              "score": 100,
+              "kind": "testId",
+              "warnings": [],
+              "role": null,
+              "name": "",
+              "tag": "span",
+              "text": "2",
+              "inputType": null,
+              "label": null,
+              "placeholder": null,
+              "testId": "cart-badge",
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "test id \"cart-badge\"",
+              "rect": {
+                "x": 1237,
+                "y": 19,
+                "width": 19,
+                "height": 15
+              }
+            },
+            "expected": "2"
+          },
+          "label": "cart-badge text changed to '2'",
+          "reason": "changed",
+          "score": 85,
+          "accepted": true,
+          "pageUrl": "http://127.0.0.1:4900/inventory.html",
+          "elementKey": "body:1/header:1/a:1/span:1"
+        },
+        {
+          "id": "step-6-s2",
+          "assertion": {
+            "type": "visible",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "role",
+                    "role": "listitem"
+                  },
+                  {
+                    "kind": "filter",
+                    "hasText": "Bike Light"
+                  },
+                  {
+                    "kind": "role",
+                    "role": "button",
+                    "name": "Remove"
+                  }
+                ]
+              },
+              "code": "page.getByRole('listitem').filter({ hasText: 'Bike Light' }).getByRole('button', { name: 'Remove' })",
+              "score": 65,
+              "kind": "scoped",
+              "warnings": [],
+              "role": "button",
+              "name": "Remove",
+              "tag": "button",
+              "text": "Remove",
+              "inputType": null,
+              "label": null,
+              "placeholder": null,
+              "testId": null,
+              "nameAttr": null,
+              "anchor": "Bike Light",
+              "describe": "button \"Remove\"",
+              "rect": {
+                "x": 702,
+                "y": 314,
+                "width": 81,
+                "height": 36
+              }
+            }
+          },
+          "label": "button text changed to 'Remove'",
+          "reason": "changed",
+          "score": 78,
+          "accepted": false,
+          "pageUrl": "http://127.0.0.1:4900/inventory.html",
+          "elementKey": "body:1/main:1/ul:1/li:2/div:1/div:1/button:1"
+        },
+        {
+          "id": "step-6-s3",
+          "assertion": {
+            "type": "textEquals",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "role",
+                    "role": "status"
+                  }
+                ]
+              },
+              "code": "page.getByRole('status')",
+              "score": 65,
+              "kind": "role",
+              "warnings": [
+                "locator has no name; it is only unique while the page has one such element"
+              ],
+              "role": "status",
+              "name": "",
+              "tag": "div",
+              "text": "Added Bike Light to your cart",
+              "inputType": null,
+              "label": null,
+              "placeholder": null,
+              "testId": null,
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "status",
+              "rect": {
+                "x": 1008,
+                "y": 660,
+                "width": 252,
+                "height": 40
+              }
+            },
+            "expected": "Added Bike Light to your cart"
+          },
+          "label": "status text changed to 'Added Bike Light to your cart'",
+          "reason": "changed",
+          "score": 78,
+          "accepted": false,
+          "pageUrl": "http://127.0.0.1:4900/inventory.html",
+          "elementKey": "body:1/div:1"
+        }
+      ],
+      "warnings": [],
+      "createdAt": 1792482060128,
+      "coords": {
+        "x": 730,
+        "y": 331,
+        "vw": 1280,
+        "vh": 720
+      },
+      "alternatives": [
+        {
+          "kind": "nth",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "button",
+                "name": "Add to cart"
+              },
+              {
+                "kind": "nth",
+                "index": 1
+              }
+            ]
+          },
+          "base": 40,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "position-based locator (.nth): breaks when items are added, removed or reordered"
+          ],
+          "fromAncestor": 0,
+          "score": 40,
+          "code": "page.getByRole('button', { name: 'Add to cart' }).nth(1)",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "nth",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "text",
+                "value": "Add to cart",
+                "exact": true
+              },
+              {
+                "kind": "nth",
+                "index": 1
+              }
+            ]
+          },
+          "base": 40,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "position-based locator (.nth): breaks when items are added, removed or reordered"
+          ],
+          "fromAncestor": 0,
+          "score": 40,
+          "code": "page.getByText('Add to cart', { exact: true }).nth(1)",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "nth",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "button"
+              },
+              {
+                "kind": "nth",
+                "index": 1
+              }
+            ]
+          },
+          "base": 40,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "position-based locator (.nth): breaks when items are added, removed or reordered"
+          ],
+          "fromAncestor": 0,
+          "score": 40,
+          "code": "page.getByRole('button').nth(1)",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "nth",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "css",
+                "selector": "div.pricebar"
+              },
+              {
+                "kind": "nth",
+                "index": 1
+              }
+            ]
+          },
+          "base": 40,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "position-based locator (.nth): breaks when items are added, removed or reordered"
+          ],
+          "fromAncestor": 1,
+          "score": 35,
+          "code": "page.locator('div.pricebar').nth(1)",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "coords",
+          "chain": {
+            "frames": [],
+            "parts": []
+          },
+          "base": 10,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "no unique locator found: falls back to a coordinate click, which breaks when the layout changes"
+          ],
+          "score": 10,
+          "code": "page.mouse.click(x, y)",
+          "verification": null,
+          "usable": true
+        }
+      ],
+      "settleMs": 735,
+      "settleTimedOut": false
+    },
+    {
+      "id": "step-7",
+      "kind": "click",
+      "target": {
+        "chain": {
+          "frames": [],
+          "parts": [
+            {
+              "kind": "role",
+              "role": "link",
+              "name": "Cart"
+            }
+          ]
+        },
+        "code": "page.getByRole('link', { name: 'Cart' })",
+        "score": 90,
+        "kind": "role",
+        "warnings": [],
+        "role": "link",
+        "name": "Cart",
+        "tag": "a",
+        "text": "🛒2",
+        "inputType": null,
+        "label": null,
+        "placeholder": null,
+        "testId": null,
+        "nameAttr": null,
+        "anchor": null,
+        "describe": "link \"Cart\"",
+        "rect": {
+          "x": 1208,
+          "y": 12,
+          "width": 48,
+          "height": 24
+        }
+      },
+      "page": {
+        "url": "http://127.0.0.1:4900/inventory.html",
+        "title": "Demo Shop - Products",
+        "heading": "Products",
+        "tab": 0
+      },
+      "preAssert": true,
+      "clickStyle": "locator",
+      "suggestions": [
+        {
+          "id": "step-7-s1",
+          "assertion": {
+            "type": "urlMatches",
+            "target": null,
+            "expected": "\\/cart\\.html",
+            "regex": true
+          },
+          "label": "URL changed to /cart.html",
+          "reason": "navigated",
+          "score": 95,
+          "accepted": true,
+          "pageUrl": "http://127.0.0.1:4900/cart.html"
+        },
+        {
+          "id": "step-7-s3",
+          "assertion": {
+            "type": "visible",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "role",
+                    "role": "heading",
+                    "name": "Your Cart"
+                  }
+                ]
+              },
+              "code": "page.getByRole('heading', { name: 'Your Cart' })",
+              "score": 90,
+              "kind": "role",
+              "warnings": [],
+              "role": "heading",
+              "name": "Your Cart",
+              "tag": "h1",
+              "text": "Your Cart",
+              "inputType": null,
+              "label": null,
+              "placeholder": null,
+              "testId": null,
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "heading \"Your Cart\"",
+              "rect": {
+                "x": 160,
+                "y": 93,
+                "width": 960,
+                "height": 39
+              }
+            }
+          },
+          "label": "heading 'Your Cart' appeared",
+          "reason": "appeared",
+          "score": 83,
+          "accepted": false,
+          "pageUrl": "http://127.0.0.1:4900/cart.html",
+          "elementKey": "body:1/main:1/h1:1"
+        },
+        {
+          "id": "step-7-s2",
+          "assertion": {
+            "type": "titleMatches",
+            "target": null,
+            "expected": "Demo Shop - Cart",
+            "regex": false
+          },
+          "label": "title changed to 'Demo Shop - Cart'",
+          "reason": "changed",
+          "score": 55,
+          "accepted": false,
+          "pageUrl": "http://127.0.0.1:4900/cart.html"
+        }
+      ],
+      "warnings": [],
+      "createdAt": 1792482061892,
+      "coords": {
+        "x": 1231,
+        "y": 24,
+        "vw": 1280,
+        "vh": 720
+      },
+      "alternatives": [
+        {
+          "kind": "role",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "link",
+                "name": "Cart",
+                "exact": true
+              }
+            ]
+          },
+          "base": 89,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 89,
+          "code": "page.getByRole('link', { name: 'Cart', exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "text",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "text",
+                "value": "🛒2",
+                "exact": true
+              }
+            ]
+          },
+          "base": 75,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 75,
+          "code": "page.getByText('🛒2', { exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "text",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "text",
+                "value": "🛒2"
+              }
+            ]
+          },
+          "base": 74,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 74,
+          "code": "page.getByText('🛒2')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "nth",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "link"
+              },
+              {
+                "kind": "nth",
+                "index": 0
+              }
+            ]
+          },
+          "base": 40,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "position-based locator (.nth): breaks when items are added, removed or reordered"
+          ],
+          "fromAncestor": 0,
+          "score": 40,
+          "code": "page.getByRole('link').first()",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "css",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "css",
+                "selector": "a.cart-link"
+              }
+            ]
+          },
+          "base": 30,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "CSS selector: breaks when the markup changes. Ask developers for a test id."
+          ],
+          "fromAncestor": 0,
+          "score": 30,
+          "code": "page.locator('a.cart-link')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        }
+      ],
+      "settleMs": 316,
+      "settleTimedOut": false
+    },
+    {
+      "id": "step-8",
+      "kind": "click",
+      "target": {
+        "chain": {
+          "frames": [],
+          "parts": [
+            {
+              "kind": "role",
+              "role": "row"
+            },
+            {
+              "kind": "filter",
+              "hasText": "Bike Light"
+            },
+            {
+              "kind": "role",
+              "role": "button",
+              "name": "Remove"
+            }
+          ]
+        },
+        "code": "page.getByRole('row').filter({ hasText: 'Bike Light' }).getByRole('button', { name: 'Remove' })",
+        "score": 65,
+        "kind": "scoped",
+        "warnings": [],
+        "role": "button",
+        "name": "Remove",
+        "tag": "button",
+        "text": "Remove",
+        "inputType": null,
+        "label": null,
+        "placeholder": null,
+        "testId": null,
+        "nameAttr": null,
+        "anchor": "Bike Light",
+        "describe": "button \"Remove\"",
+        "rect": {
+          "x": 853,
+          "y": 252,
+          "width": 81,
+          "height": 36
+        }
+      },
+      "page": {
+        "url": "http://127.0.0.1:4900/cart.html",
+        "title": "Demo Shop - Cart",
+        "heading": "Your Cart",
+        "tab": 0
+      },
+      "preAssert": true,
+      "clickStyle": "locator",
+      "suggestions": [
+        {
+          "id": "step-8-s1",
+          "assertion": {
+            "type": "textEquals",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "testId",
+                    "value": "cart-badge"
+                  }
+                ]
+              },
+              "code": "page.getByTestId('cart-badge')",
+              "score": 100,
+              "kind": "testId",
+              "warnings": [],
+              "role": null,
+              "name": "",
+              "tag": "span",
+              "text": "1",
+              "inputType": null,
+              "label": null,
+              "placeholder": null,
+              "testId": "cart-badge",
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "test id \"cart-badge\"",
+              "rect": {
+                "x": 1239,
+                "y": 19,
+                "width": 17,
+                "height": 15
+              }
+            },
+            "expected": "1"
+          },
+          "label": "cart-badge text changed to '1'",
+          "reason": "changed",
+          "score": 85,
+          "accepted": true,
+          "pageUrl": "http://127.0.0.1:4900/cart.html",
+          "elementKey": "body:1/header:1/a:1/span:1"
+        },
+        {
+          "id": "step-8-s2",
+          "assertion": {
+            "type": "textEquals",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "text",
+                    "value": {
+                      "regex": "^Total"
+                    }
+                  }
+                ]
+              },
+              "code": "page.getByText(/^Total/)",
+              "score": 60,
+              "kind": "text",
+              "warnings": [
+                "Text \"Total: $29.99\" looks dynamic (currency amount, decimal amount); matched its steady part with a regex"
+              ],
+              "role": "paragraph",
+              "name": "",
+              "tag": "p",
+              "text": "Total: $29.99",
+              "inputType": null,
+              "label": null,
+              "placeholder": null,
+              "testId": null,
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "text \"/^Total/\"",
+              "rect": {
+                "x": 160,
+                "y": 260,
+                "width": 960,
+                "height": 20
+              }
+            },
+            "expected": "Total: $29.99"
+          },
+          "label": "paragraph text changed to 'Total: $29.99'",
+          "reason": "changed",
+          "score": 78,
+          "accepted": false,
+          "pageUrl": "http://127.0.0.1:4900/cart.html",
+          "elementKey": "body:1/main:1/p:2"
+        }
+      ],
+      "warnings": [],
+      "createdAt": 1792482063016,
+      "coords": {
+        "x": 893,
+        "y": 269,
+        "vw": 1280,
+        "vh": 720
+      },
+      "alternatives": [
+        {
+          "kind": "nth",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "button",
+                "name": "Remove"
+              },
+              {
+                "kind": "nth",
+                "index": 1
+              }
+            ]
+          },
+          "base": 40,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "position-based locator (.nth): breaks when items are added, removed or reordered"
+          ],
+          "fromAncestor": 0,
+          "score": 40,
+          "code": "page.getByRole('button', { name: 'Remove' }).nth(1)",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "nth",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "text",
+                "value": "Remove",
+                "exact": true
+              },
+              {
+                "kind": "nth",
+                "index": 1
+              }
+            ]
+          },
+          "base": 40,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "position-based locator (.nth): breaks when items are added, removed or reordered"
+          ],
+          "fromAncestor": 0,
+          "score": 40,
+          "code": "page.getByText('Remove', { exact: true }).nth(1)",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "nth",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "button"
+              },
+              {
+                "kind": "nth",
+                "index": 1
+              }
+            ]
+          },
+          "base": 40,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "position-based locator (.nth): breaks when items are added, removed or reordered"
+          ],
+          "fromAncestor": 0,
+          "score": 40,
+          "code": "page.getByRole('button').nth(1)",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "coords",
+          "chain": {
+            "frames": [],
+            "parts": []
+          },
+          "base": 10,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "no unique locator found: falls back to a coordinate click, which breaks when the layout changes"
+          ],
+          "score": 10,
+          "code": "page.mouse.click(x, y)",
+          "verification": null,
+          "usable": true
+        }
+      ],
+      "settleMs": 313,
+      "settleTimedOut": false
+    },
+    {
+      "id": "step-9",
+      "kind": "click",
+      "target": {
+        "chain": {
+          "frames": [],
+          "parts": [
+            {
+              "kind": "role",
+              "role": "button",
+              "name": "Checkout"
+            }
+          ]
+        },
+        "code": "page.getByRole('button', { name: 'Checkout' })",
+        "score": 90,
+        "kind": "role",
+        "warnings": [],
+        "role": "button",
+        "name": "Checkout",
+        "tag": "button",
+        "text": "Checkout",
+        "inputType": null,
+        "label": null,
+        "placeholder": null,
+        "testId": null,
+        "nameAttr": null,
+        "anchor": null,
+        "describe": "button \"Checkout\"",
+        "rect": {
+          "x": 309,
+          "y": 296,
+          "width": 92,
+          "height": 36
+        }
+      },
+      "page": {
+        "url": "http://127.0.0.1:4900/cart.html",
+        "title": "Demo Shop - Cart",
+        "heading": "Your Cart",
+        "tab": 0
+      },
+      "preAssert": true,
+      "clickStyle": "locator",
+      "suggestions": [
+        {
+          "id": "step-9-s1",
+          "assertion": {
+            "type": "urlMatches",
+            "target": null,
+            "expected": "\\/checkout\\.html",
+            "regex": true
+          },
+          "label": "URL changed to /checkout.html",
+          "reason": "navigated",
+          "score": 95,
+          "accepted": true,
+          "pageUrl": "http://127.0.0.1:4900/checkout.html"
+        },
+        {
+          "id": "step-9-s3",
+          "assertion": {
+            "type": "visible",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "role",
+                    "role": "heading",
+                    "name": "Checkout: Your Information"
+                  }
+                ]
+              },
+              "code": "page.getByRole('heading', { name: 'Checkout: Your Information' })",
+              "score": 90,
+              "kind": "role",
+              "warnings": [],
+              "role": "heading",
+              "name": "Checkout: Your Information",
+              "tag": "h1",
+              "text": "Checkout: Your Information",
+              "inputType": null,
+              "label": null,
+              "placeholder": null,
+              "testId": null,
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "heading \"Checkout: Your Information\"",
+              "rect": {
+                "x": 160,
+                "y": 45,
+                "width": 960,
+                "height": 39
+              }
+            }
+          },
+          "label": "heading 'Checkout: Your Information' appeared",
+          "reason": "appeared",
+          "score": 83,
+          "accepted": false,
+          "pageUrl": "http://127.0.0.1:4900/checkout.html",
+          "elementKey": "body:1/main:1/h1:1"
+        },
+        {
+          "id": "step-9-s2",
+          "assertion": {
+            "type": "titleMatches",
+            "target": null,
+            "expected": "Demo Shop - Checkout",
+            "regex": false
+          },
+          "label": "title changed to 'Demo Shop - Checkout'",
+          "reason": "changed",
+          "score": 55,
+          "accepted": false,
+          "pageUrl": "http://127.0.0.1:4900/checkout.html"
+        }
+      ],
+      "warnings": [],
+      "createdAt": 1792482064132,
+      "coords": {
+        "x": 355,
+        "y": 313,
+        "vw": 1280,
+        "vh": 720
+      },
+      "alternatives": [
+        {
+          "kind": "role",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "button",
+                "name": "Checkout",
+                "exact": true
+              }
+            ]
+          },
+          "base": 89,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 89,
+          "code": "page.getByRole('button', { name: 'Checkout', exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "text",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "text",
+                "value": "Checkout",
+                "exact": true
+              }
+            ]
+          },
+          "base": 75,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 75,
+          "code": "page.getByText('Checkout', { exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "text",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "text",
+                "value": "Checkout"
+              }
+            ]
+          },
+          "base": 74,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 74,
+          "code": "page.getByText('Checkout')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "nth",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "button"
+              },
+              {
+                "kind": "nth",
+                "index": 1
+              }
+            ]
+          },
+          "base": 40,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "position-based locator (.nth): breaks when items are added, removed or reordered"
+          ],
+          "fromAncestor": 0,
+          "score": 40,
+          "code": "page.getByRole('button').nth(1)",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "coords",
+          "chain": {
+            "frames": [],
+            "parts": []
+          },
+          "base": 10,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "no unique locator found: falls back to a coordinate click, which breaks when the layout changes"
+          ],
+          "score": 10,
+          "code": "page.mouse.click(x, y)",
+          "verification": null,
+          "usable": true
+        }
+      ],
+      "settleMs": 319,
+      "settleTimedOut": false
+    },
+    {
+      "id": "step-10",
+      "kind": "fill",
+      "target": {
+        "chain": {
+          "frames": [],
+          "parts": [
+            {
+              "kind": "role",
+              "role": "textbox",
+              "name": "First Name"
+            }
+          ]
+        },
+        "code": "page.getByRole('textbox', { name: 'First Name' })",
+        "score": 90,
+        "kind": "role",
+        "warnings": [],
+        "role": "textbox",
+        "name": "First Name",
+        "tag": "input",
+        "text": "",
+        "inputType": "text",
+        "label": "First Name",
+        "placeholder": null,
+        "testId": null,
+        "nameAttr": "firstName",
+        "anchor": null,
+        "describe": "textbox \"First Name\"",
+        "rect": {
+          "x": 480,
+          "y": 200,
+          "width": 320,
+          "height": 40
+        }
+      },
+      "page": {
+        "url": "http://127.0.0.1:4900/checkout.html",
+        "title": "Demo Shop - Checkout",
+        "heading": "Checkout: Your Information",
+        "tab": 0
+      },
+      "preAssert": true,
+      "clickStyle": "locator",
+      "suggestions": [],
+      "warnings": [],
+      "createdAt": 1792482065057,
+      "alternatives": [
+        {
+          "kind": "role",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "textbox",
+                "name": "First Name",
+                "exact": true
+              }
+            ]
+          },
+          "base": 89,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 89,
+          "code": "page.getByRole('textbox', { name: 'First Name', exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "label",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "label",
+                "value": "First Name"
+              }
+            ]
+          },
+          "base": 85,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 85,
+          "code": "page.getByLabel('First Name')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "label",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "label",
+                "value": "First Name",
+                "exact": true
+              }
+            ]
+          },
+          "base": 84,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 84,
+          "code": "page.getByLabel('First Name', { exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "css",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "css",
+                "selector": "#first"
+              }
+            ]
+          },
+          "base": 45,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "CSS selector: breaks when the markup changes. Ask developers for a test id."
+          ],
+          "fromAncestor": 0,
+          "score": 45,
+          "code": "page.locator('#first')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "css",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "css",
+                "selector": "input[name=\"firstName\"]"
+              }
+            ]
+          },
+          "base": 43,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "CSS selector: breaks when the markup changes. Ask developers for a test id."
+          ],
+          "fromAncestor": 0,
+          "score": 43,
+          "code": "page.locator('input[name=\"firstName\"]')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        }
+      ],
+      "value": "Asha",
+      "secret": false,
+      "settleMs": 1
+    },
+    {
+      "id": "step-11",
+      "kind": "fill",
+      "target": {
+        "chain": {
+          "frames": [],
+          "parts": [
+            {
+              "kind": "role",
+              "role": "textbox",
+              "name": "Last Name"
+            }
+          ]
+        },
+        "code": "page.getByRole('textbox', { name: 'Last Name' })",
+        "score": 90,
+        "kind": "role",
+        "warnings": [],
+        "role": "textbox",
+        "name": "Last Name",
+        "tag": "input",
+        "text": "",
+        "inputType": "text",
+        "label": "Last Name",
+        "placeholder": null,
+        "testId": null,
+        "nameAttr": "lastName",
+        "anchor": null,
+        "describe": "textbox \"Last Name\"",
+        "rect": {
+          "x": 480,
+          "y": 284,
+          "width": 320,
+          "height": 40
+        }
+      },
+      "page": {
+        "url": "http://127.0.0.1:4900/checkout.html",
+        "title": "Demo Shop - Checkout",
+        "heading": "Checkout: Your Information",
+        "tab": 0
+      },
+      "preAssert": true,
+      "clickStyle": "locator",
+      "suggestions": [],
+      "warnings": [],
+      "createdAt": 1792482065133,
+      "alternatives": [
+        {
+          "kind": "role",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "textbox",
+                "name": "Last Name",
+                "exact": true
+              }
+            ]
+          },
+          "base": 89,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 89,
+          "code": "page.getByRole('textbox', { name: 'Last Name', exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "label",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "label",
+                "value": "Last Name"
+              }
+            ]
+          },
+          "base": 85,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 85,
+          "code": "page.getByLabel('Last Name')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "label",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "label",
+                "value": "Last Name",
+                "exact": true
+              }
+            ]
+          },
+          "base": 84,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 84,
+          "code": "page.getByLabel('Last Name', { exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "css",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "css",
+                "selector": "#last"
+              }
+            ]
+          },
+          "base": 45,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "CSS selector: breaks when the markup changes. Ask developers for a test id."
+          ],
+          "fromAncestor": 0,
+          "score": 45,
+          "code": "page.locator('#last')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "css",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "css",
+                "selector": "input[name=\"lastName\"]"
+              }
+            ]
+          },
+          "base": 43,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "CSS selector: breaks when the markup changes. Ask developers for a test id."
+          ],
+          "fromAncestor": 0,
+          "score": 43,
+          "code": "page.locator('input[name=\"lastName\"]')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        }
+      ],
+      "value": "Rao",
+      "secret": false,
+      "settleMs": 1
+    },
+    {
+      "id": "step-12",
+      "kind": "fill",
+      "target": {
+        "chain": {
+          "frames": [],
+          "parts": [
+            {
+              "kind": "role",
+              "role": "textbox",
+              "name": "Postal Code"
+            }
+          ]
+        },
+        "code": "page.getByRole('textbox', { name: 'Postal Code' })",
+        "score": 90,
+        "kind": "role",
+        "warnings": [],
+        "role": "textbox",
+        "name": "Postal Code",
+        "tag": "input",
+        "text": "",
+        "inputType": "text",
+        "label": "Postal Code",
+        "placeholder": null,
+        "testId": null,
+        "nameAttr": "postalCode",
+        "anchor": null,
+        "describe": "textbox \"Postal Code\"",
+        "rect": {
+          "x": 480,
+          "y": 368,
+          "width": 320,
+          "height": 40
+        }
+      },
+      "page": {
+        "url": "http://127.0.0.1:4900/checkout.html",
+        "title": "Demo Shop - Checkout",
+        "heading": "Checkout: Your Information",
+        "tab": 0
+      },
+      "preAssert": true,
+      "clickStyle": "locator",
+      "suggestions": [],
+      "warnings": [],
+      "createdAt": 1792482065191,
+      "alternatives": [
+        {
+          "kind": "role",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "textbox",
+                "name": "Postal Code",
+                "exact": true
+              }
+            ]
+          },
+          "base": 89,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 89,
+          "code": "page.getByRole('textbox', { name: 'Postal Code', exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "label",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "label",
+                "value": "Postal Code"
+              }
+            ]
+          },
+          "base": 85,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 85,
+          "code": "page.getByLabel('Postal Code')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "label",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "label",
+                "value": "Postal Code",
+                "exact": true
+              }
+            ]
+          },
+          "base": 84,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 84,
+          "code": "page.getByLabel('Postal Code', { exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "css",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "css",
+                "selector": "#zip"
+              }
+            ]
+          },
+          "base": 45,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "CSS selector: breaks when the markup changes. Ask developers for a test id."
+          ],
+          "fromAncestor": 0,
+          "score": 45,
+          "code": "page.locator('#zip')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "css",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "css",
+                "selector": "input[name=\"postalCode\"]"
+              }
+            ]
+          },
+          "base": 43,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "CSS selector: breaks when the markup changes. Ask developers for a test id."
+          ],
+          "fromAncestor": 0,
+          "score": 43,
+          "code": "page.locator('input[name=\"postalCode\"]')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        }
+      ],
+      "value": "500038",
+      "secret": false,
+      "settleMs": 1
+    },
+    {
+      "id": "step-13",
+      "kind": "check",
+      "target": {
+        "chain": {
+          "frames": [],
+          "parts": [
+            {
+              "kind": "role",
+              "role": "checkbox",
+              "name": "I agree to the terms"
+            }
+          ]
+        },
+        "code": "page.getByRole('checkbox', { name: 'I agree to the terms' })",
+        "score": 90,
+        "kind": "role",
+        "warnings": [],
+        "role": "checkbox",
+        "name": "I agree to the terms",
+        "tag": "input",
+        "text": "",
+        "inputType": "checkbox",
+        "label": "I agree to the terms",
+        "placeholder": null,
+        "testId": null,
+        "nameAttr": null,
+        "anchor": null,
+        "describe": "checkbox \"I agree to the terms\"",
+        "rect": {
+          "x": 484,
+          "y": 423,
+          "width": 13,
+          "height": 13
+        }
+      },
+      "page": {
+        "url": "http://127.0.0.1:4900/checkout.html",
+        "title": "Demo Shop - Checkout",
+        "heading": "Checkout: Your Information",
+        "tab": 0
+      },
+      "preAssert": true,
+      "clickStyle": "locator",
+      "suggestions": [
+        {
+          "id": "step-13-s1",
+          "assertion": {
+            "type": "checked",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "role",
+                    "role": "checkbox",
+                    "name": "I agree to the terms"
+                  }
+                ]
+              },
+              "code": "page.getByRole('checkbox', { name: 'I agree to the terms' })",
+              "score": 90,
+              "kind": "role",
+              "warnings": [],
+              "role": "checkbox",
+              "name": "I agree to the terms",
+              "tag": "input",
+              "text": "",
+              "inputType": "checkbox",
+              "label": "I agree to the terms",
+              "placeholder": null,
+              "testId": null,
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "checkbox \"I agree to the terms\"",
+              "rect": {
+                "x": 484,
+                "y": 423,
+                "width": 13,
+                "height": 13
+              }
+            }
+          },
+          "label": "checkbox 'I agree to the terms' is now checked",
+          "reason": "changed",
+          "score": 87,
+          "accepted": true,
+          "pageUrl": "http://127.0.0.1:4900/checkout.html",
+          "elementKey": "body:1/main:1/form:1/label:4/input:1"
+        }
+      ],
+      "warnings": [],
+      "createdAt": 1792482065251,
+      "coords": {
+        "x": 490,
+        "y": 429,
+        "vw": 1280,
+        "vh": 720
+      },
+      "alternatives": [
+        {
+          "kind": "role",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "checkbox",
+                "name": "I agree to the terms",
+                "exact": true
+              }
+            ]
+          },
+          "base": 89,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 89,
+          "code": "page.getByRole('checkbox', { name: 'I agree to the terms', exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "label",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "label",
+                "value": "I agree to the terms"
+              }
+            ]
+          },
+          "base": 85,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 85,
+          "code": "page.getByLabel('I agree to the terms')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "label",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "label",
+                "value": "I agree to the terms",
+                "exact": true
+              }
+            ]
+          },
+          "base": 84,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 84,
+          "code": "page.getByLabel('I agree to the terms', { exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "role",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "checkbox"
+              }
+            ]
+          },
+          "base": 65,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "locator has no name; it is only unique while the page has one such element"
+          ],
+          "fromAncestor": 0,
+          "score": 65,
+          "code": "page.getByRole('checkbox')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "css",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "css",
+                "selector": "#terms"
+              }
+            ]
+          },
+          "base": 45,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "CSS selector: breaks when the markup changes. Ask developers for a test id."
+          ],
+          "fromAncestor": 0,
+          "score": 45,
+          "code": "page.locator('#terms')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        }
+      ],
+      "settleMs": 1,
+      "settleTimedOut": false
+    },
+    {
+      "id": "step-14",
+      "kind": "click",
+      "target": {
+        "chain": {
+          "frames": [],
+          "parts": [
+            {
+              "kind": "role",
+              "role": "button",
+              "name": "Continue"
+            }
+          ]
+        },
+        "code": "page.getByRole('button', { name: 'Continue' })",
+        "score": 90,
+        "kind": "role",
+        "warnings": [],
+        "role": "button",
+        "name": "Continue",
+        "tag": "button",
+        "text": "Continue",
+        "inputType": null,
+        "label": null,
+        "placeholder": null,
+        "testId": null,
+        "nameAttr": null,
+        "anchor": null,
+        "describe": "button \"Continue\"",
+        "rect": {
+          "x": 480,
+          "y": 452,
+          "width": 320,
+          "height": 36
+        }
+      },
+      "page": {
+        "url": "http://127.0.0.1:4900/checkout.html",
+        "title": "Demo Shop - Checkout",
+        "heading": "Checkout: Your Information",
+        "tab": 0
+      },
+      "preAssert": true,
+      "clickStyle": "locator",
+      "suggestions": [
+        {
+          "id": "step-14-s1",
+          "assertion": {
+            "type": "visible",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "role",
+                    "role": "dialog",
+                    "name": "Confirm your order"
+                  }
+                ]
+              },
+              "code": "page.getByRole('dialog', { name: 'Confirm your order' })",
+              "score": 90,
+              "kind": "role",
+              "warnings": [],
+              "role": "dialog",
+              "name": "Confirm your order",
+              "tag": "div",
+              "text": "Confirm your order Place the order now? Cancel Place order",
+              "inputType": null,
+              "label": "Confirm your order",
+              "placeholder": null,
+              "testId": null,
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "dialog \"Confirm your order\"",
+              "rect": {
+                "x": 466,
+                "y": 266,
+                "width": 348,
+                "height": 189
+              }
+            }
+          },
+          "label": "modal 'Confirm your order' appeared",
+          "reason": "appeared",
+          "score": 90,
+          "accepted": true,
+          "pageUrl": "http://127.0.0.1:4900/checkout.html",
+          "elementKey": "body:1/div:1/div:1"
+        },
+        {
+          "id": "step-14-s2",
+          "assertion": {
+            "type": "visible",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "role",
+                    "role": "heading",
+                    "name": "Confirm your order"
+                  }
+                ]
+              },
+              "code": "page.getByRole('heading', { name: 'Confirm your order' })",
+              "score": 90,
+              "kind": "role",
+              "warnings": [],
+              "role": "heading",
+              "name": "Confirm your order",
+              "tag": "h2",
+              "text": "Confirm your order",
+              "inputType": null,
+              "label": null,
+              "placeholder": null,
+              "testId": null,
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "heading \"Confirm your order\"",
+              "rect": {
+                "x": 490,
+                "y": 310,
+                "width": 300,
+                "height": 29
+              }
+            }
+          },
+          "label": "heading 'Confirm your order' appeared",
+          "reason": "appeared",
+          "score": 84,
+          "accepted": false,
+          "pageUrl": "http://127.0.0.1:4900/checkout.html",
+          "elementKey": "body:1/div:1/div:1/h2:1"
+        },
+        {
+          "id": "step-14-s3",
+          "assertion": {
+            "type": "visible",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "role",
+                    "role": "button",
+                    "name": "Cancel"
+                  }
+                ]
+              },
+              "code": "page.getByRole('button', { name: 'Cancel' })",
+              "score": 90,
+              "kind": "role",
+              "warnings": [],
+              "role": "button",
+              "name": "Cancel",
+              "tag": "button",
+              "text": "Cancel",
+              "inputType": null,
+              "label": null,
+              "placeholder": null,
+              "testId": null,
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "button \"Cancel\"",
+              "rect": {
+                "x": 490,
+                "y": 394,
+                "width": 72,
+                "height": 36
+              }
+            }
+          },
+          "label": "button 'Cancel' appeared",
+          "reason": "appeared",
+          "score": 62,
+          "accepted": false,
+          "pageUrl": "http://127.0.0.1:4900/checkout.html",
+          "elementKey": "body:1/div:1/div:1/button:1"
+        },
+        {
+          "id": "step-14-s4",
+          "assertion": {
+            "type": "visible",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "role",
+                    "role": "button",
+                    "name": "Place order"
+                  }
+                ]
+              },
+              "code": "page.getByRole('button', { name: 'Place order' })",
+              "score": 90,
+              "kind": "role",
+              "warnings": [],
+              "role": "button",
+              "name": "Place order",
+              "tag": "button",
+              "text": "Place order",
+              "inputType": null,
+              "label": null,
+              "placeholder": null,
+              "testId": null,
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "button \"Place order\"",
+              "rect": {
+                "x": 567,
+                "y": 394,
+                "width": 107,
+                "height": 36
+              }
+            }
+          },
+          "label": "button 'Place order' appeared",
+          "reason": "appeared",
+          "score": 62,
+          "accepted": false,
+          "pageUrl": "http://127.0.0.1:4900/checkout.html",
+          "elementKey": "body:1/div:1/div:1/button:2"
+        }
+      ],
+      "warnings": [],
+      "createdAt": 1792482065403,
+      "coords": {
+        "x": 640,
+        "y": 470,
+        "vw": 1280,
+        "vh": 720
+      },
+      "alternatives": [
+        {
+          "kind": "role",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "button",
+                "name": "Continue",
+                "exact": true
+              }
+            ]
+          },
+          "base": 89,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 89,
+          "code": "page.getByRole('button', { name: 'Continue', exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "text",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "text",
+                "value": "Continue",
+                "exact": true
+              }
+            ]
+          },
+          "base": 75,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 75,
+          "code": "page.getByText('Continue', { exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "text",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "text",
+                "value": "Continue"
+              }
+            ]
+          },
+          "base": 74,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 74,
+          "code": "page.getByText('Continue')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "role",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "button"
+              }
+            ]
+          },
+          "base": 65,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "locator has no name; it is only unique while the page has one such element"
+          ],
+          "fromAncestor": 0,
+          "score": 65,
+          "code": "page.getByRole('button')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "coords",
+          "chain": {
+            "frames": [],
+            "parts": []
+          },
+          "base": 10,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "no unique locator found: falls back to a coordinate click, which breaks when the layout changes"
+          ],
+          "score": 10,
+          "code": "page.mouse.click(x, y)",
+          "verification": null,
+          "usable": true
+        }
+      ],
+      "settleMs": 321,
+      "settleTimedOut": false
+    },
+    {
+      "id": "step-15",
+      "kind": "click",
+      "target": {
+        "chain": {
+          "frames": [],
+          "parts": [
+            {
+              "kind": "role",
+              "role": "button",
+              "name": "Place order"
+            }
+          ]
+        },
+        "code": "page.getByRole('button', { name: 'Place order' })",
+        "score": 90,
+        "kind": "role",
+        "warnings": [],
+        "role": "button",
+        "name": "Place order",
+        "tag": "button",
+        "text": "Place order",
+        "inputType": null,
+        "label": null,
+        "placeholder": null,
+        "testId": null,
+        "nameAttr": null,
+        "anchor": null,
+        "describe": "button \"Place order\"",
+        "rect": {
+          "x": 567,
+          "y": 394,
+          "width": 107,
+          "height": 36
+        }
+      },
+      "page": {
+        "url": "http://127.0.0.1:4900/checkout.html",
+        "title": "Demo Shop - Checkout",
+        "heading": "Checkout: Your Information",
+        "tab": 0
+      },
+      "preAssert": true,
+      "clickStyle": "locator",
+      "suggestions": [
+        {
+          "id": "step-15-s1",
+          "assertion": {
+            "type": "visible",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "role",
+                    "role": "heading",
+                    "name": "Thank you for your order!"
+                  }
+                ]
+              },
+              "code": "page.getByRole('heading', { name: 'Thank you for your order!' })",
+              "score": 90,
+              "kind": "role",
+              "warnings": [],
+              "role": "heading",
+              "name": "Thank you for your order!",
+              "tag": "h2",
+              "text": "Thank you for your order!",
+              "inputType": null,
+              "label": null,
+              "placeholder": null,
+              "testId": null,
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "heading \"Thank you for your order!\"",
+              "rect": {
+                "x": 160,
+                "y": 106,
+                "width": 960,
+                "height": 29
+              }
+            }
+          },
+          "label": "heading 'Thank you for your order!' appeared",
+          "reason": "appeared",
+          "score": 84,
+          "accepted": true,
+          "pageUrl": "http://127.0.0.1:4900/checkout.html",
+          "elementKey": "body:1/main:1/section:1/h2:1"
+        },
+        {
+          "id": "step-15-s3",
+          "assertion": {
+            "type": "hidden",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "role",
+                    "role": "dialog",
+                    "name": "Confirm your order"
+                  }
+                ]
+              },
+              "code": "page.getByRole('dialog', { name: 'Confirm your order' })",
+              "score": 90,
+              "kind": "role",
+              "warnings": [],
+              "role": "dialog",
+              "name": "Confirm your order",
+              "tag": "div",
+              "text": "Confirm your order Place the order now? Cancel Place order",
+              "inputType": null,
+              "label": "Confirm your order",
+              "placeholder": null,
+              "testId": null,
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "dialog \"Confirm your order\"",
+              "rect": {
+                "x": 466,
+                "y": 266,
+                "width": 348,
+                "height": 189
+              }
+            }
+          },
+          "label": "modal 'Confirm your order' disappeared",
+          "reason": "disappeared",
+          "score": 70,
+          "accepted": false,
+          "pageUrl": "http://127.0.0.1:4900/checkout.html",
+          "elementKey": "body:1/div:1/div:1"
+        },
+        {
+          "id": "step-15-s2",
+          "assertion": {
+            "type": "hidden",
+            "target": {
+              "chain": {
+                "frames": [],
+                "parts": [
+                  {
+                    "kind": "css",
+                    "selector": "#confirm"
+                  }
+                ]
+              },
+              "code": "page.locator('#confirm')",
+              "score": 45,
+              "kind": "css",
+              "warnings": [
+                "CSS selector: breaks when the markup changes. Ask developers for a test id."
+              ],
+              "role": null,
+              "name": "",
+              "tag": "div",
+              "text": "Confirm your order Place the order now? Cancel Place order",
+              "inputType": null,
+              "label": null,
+              "placeholder": null,
+              "testId": null,
+              "nameAttr": null,
+              "anchor": null,
+              "describe": "\"#confirm\"",
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 1280,
+                "height": 720
+              }
+            }
+          },
+          "label": "overlay 'Confirm your order Place the o…' disappeared",
+          "reason": "disappeared",
+          "score": 60,
+          "accepted": false,
+          "pageUrl": "http://127.0.0.1:4900/checkout.html",
+          "elementKey": "body:1/div:1"
+        }
+      ],
+      "warnings": [],
+      "createdAt": 1792482066948,
+      "coords": {
+        "x": 620,
+        "y": 412,
+        "vw": 1280,
+        "vh": 720
+      },
+      "alternatives": [
+        {
+          "kind": "role",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "button",
+                "name": "Place order",
+                "exact": true
+              }
+            ]
+          },
+          "base": 89,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 89,
+          "code": "page.getByRole('button', { name: 'Place order', exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "text",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "text",
+                "value": "Place order",
+                "exact": true
+              }
+            ]
+          },
+          "base": 75,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 75,
+          "code": "page.getByText('Place order', { exact: true })",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "text",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "text",
+                "value": "Place order"
+              }
+            ]
+          },
+          "base": 74,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [],
+          "fromAncestor": 0,
+          "score": 74,
+          "code": "page.getByText('Place order')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "css",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "css",
+                "selector": "#place"
+              }
+            ]
+          },
+          "base": 45,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "CSS selector: breaks when the markup changes. Ask developers for a test id."
+          ],
+          "fromAncestor": 0,
+          "score": 45,
+          "code": "page.locator('#place')",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        },
+        {
+          "kind": "nth",
+          "chain": {
+            "frames": [],
+            "parts": [
+              {
+                "kind": "role",
+                "role": "button"
+              },
+              {
+                "kind": "nth",
+                "index": 2
+              }
+            ]
+          },
+          "base": 40,
+          "dynamic": false,
+          "dynamicLevel": 0,
+          "warnings": [
+            "position-based locator (.nth): breaks when items are added, removed or reordered"
+          ],
+          "fromAncestor": 0,
+          "score": 40,
+          "code": "page.getByRole('button').nth(2)",
+          "verification": {
+            "count": 1,
+            "matchesTarget": true
+          },
+          "usable": true
+        }
+      ],
+      "settleMs": 1048,
+      "settleTimedOut": false
+    }
+  ]
+}

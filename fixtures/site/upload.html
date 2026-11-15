@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Apply</title><link rel="stylesheet" href="style.css"></head>
+<body><main>
+  <h1>Job application</h1>
+  <label for="resume">Resume</label>
+  <input type="file" id="resume" name="resume">
+  <p id="chosen" role="status"></p>
+  <script>
+    document.getElementById('resume').addEventListener('change', function () {
+      var f = this.files[0];
+      document.getElementById('chosen').textContent = f ? 'Selected file: ' + f.name : '';
+    });
+  </script>
+</main></body>
+</html>

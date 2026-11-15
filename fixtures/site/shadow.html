@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Shadow DOM profile</title><link rel="stylesheet" href="style.css"></head>
+<body><main>
+  <h1>Team</h1>
+  <user-card name="Asha Rao"></user-card>
+  <user-card name="Ben Ortiz"></user-card>
+</main>
+<script>
+  customElements.define('user-card', class extends HTMLElement {
+    connectedCallback() {
+      var root = this.attachShadow({ mode: 'open' });
+      var name = this.getAttribute('name');
+      root.innerHTML = '<style>.c{background:#fff;padding:10px;margin:8px 0;border-radius:8px;display:flex;gap:12px;align-items:center}</style>' +
+        '<div class="c"><strong>' + name + '</strong><button type="button">Follow</button><span class="state"></span></div>';
+      var btn = root.querySelector('button');
+      btn.addEventListener('click', function () {
+        var on = btn.textContent === 'Follow';
+        btn.textContent = on ? 'Unfollow' : 'Follow';
+        root.querySelector('.state').textContent = on ? 'You follow ' + name : '';
+      });
+    }
+  });
+</script>
+</body>
+</html>

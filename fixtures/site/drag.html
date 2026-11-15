@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Board</title><link rel="stylesheet" href="style.css"></head>
+<body><main>
+  <h1>Task board</h1>
+  <section class="zone" aria-label="To do" id="todo"><span class="chip" draggable="true" id="task-a">Write tests</span></section>
+  <section class="zone" aria-label="Done" id="done"></section>
+  <p id="log" role="status"></p>
+  <script>
+    var chip = document.getElementById('task-a');
+    chip.addEventListener('dragstart', function (e) { e.dataTransfer.setData('text/plain', 'task-a'); });
+    ['todo', 'done'].forEach(function (id) {
+      var z = document.getElementById(id);
+      z.addEventListener('dragover', function (e) { e.preventDefault(); });
+      z.addEventListener('drop', function (e) {
+        e.preventDefault();
+        z.appendChild(document.getElementById(e.dataTransfer.getData('text/plain')));
+        document.getElementById('log').textContent = 'Moved to ' + z.getAttribute('aria-label');
+      });
+    });
+  </script>
+</main></body>
+</html>

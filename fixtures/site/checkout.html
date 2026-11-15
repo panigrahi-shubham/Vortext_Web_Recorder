@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Demo Shop - Checkout</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<main>
+  <h1>Checkout: Your Information</h1>
+  <form id="info" class="login-box">
+    <label for="first">First Name</label><input id="first" name="firstName">
+    <label for="last">Last Name</label><input id="last" name="lastName">
+    <label for="zip">Postal Code</label><input id="zip" name="postalCode">
+    <label><input type="checkbox" id="terms"> I agree to the terms</label>
+    <button class="btn" type="submit">Continue</button>
+  </form>
+  <section id="done" hidden>
+    <h2>Thank you for your order!</h2>
+    <p class="order-number"></p>
+  </section>
+</main>
+<div class="modal-backdrop" id="confirm" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <h2 id="confirm-title">Confirm your order</h2>
+    <p>Place the order now?</p>
+    <button type="button" class="btn" id="cancel">Cancel</button>
+    <button type="button" class="btn" id="place">Place order</button>
+  </div>
+</div>
+<span class="loading-spinner" role="progressbar" aria-label="Placing order" hidden>Placing order...</span>
+<script src="app.js"></script>
+<script>
+  document.getElementById('info').addEventListener('submit', function (e) {
+    e.preventDefault();
+    document.getElementById('confirm').hidden = false;
+  });
+  document.getElementById('cancel').addEventListener('click', function () { document.getElementById('confirm').hidden = true; });
+  document.getElementById('place').addEventListener('click', function () {
+    document.getElementById('confirm').hidden = true;
+    shop.spinner(true);
+    fetch('/api/order').then(function (r) { return r.json(); }).then(function (o) {
+      shop.spinner(false);
+      document.getElementById('info').hidden = true;
+      document.getElementById('done').hidden = false;
+      document.querySelector('.order-number').textContent = 'Order #' + o.orderId + ' placed at ' + new Date().toLocaleTimeString();
+      shop.saveCart([]);
+    });
+  });
+</script>
+</body>
+</html>
