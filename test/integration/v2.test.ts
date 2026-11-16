@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
+import { createHash, generateKeyPairSync } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { it } from 'node:test';
 import { chromium, type Browser } from 'playwright';
@@ -46,24 +47,26 @@ it('the npm scout command and installed Chrome extension return the same locator
   const fixture = await startFixtureServer(0);
   fs.mkdirSync(path.join(root, '.tmp'), { recursive: true });
   const profile = fs.mkdtempSync(path.join(root, '.tmp', 'extension-profile-'));
-  const extension = path.join(root, 'extension/dist');
+  const extension = fs.mkdtempSync(path.join(root, '.tmp', 'extension-under-test-'));
+  fs.cpSync(path.join(root, 'extension/dist'), extension, { recursive: true });
+  // A temporary public key gives this unpacked test copy a predictable ID on every OS.
+  // The release manifest and all extension code remain unchanged.
+  const { publicKey } = generateKeyPairSync('rsa', { modulusLength: 2048 });
+  const key = publicKey.export({ type: 'spki', format: 'der' });
+  const extensionId = createHash('sha256').update(key).digest('hex').slice(0, 32).replace(/[0-9a-f]/g, digit => String.fromCharCode(97 + parseInt(digit, 16)));
+  const manifestFile = path.join(extension, 'manifest.json');
+  const manifest = JSON.parse(fs.readFileSync(manifestFile, 'utf8'));
+  fs.writeFileSync(manifestFile, JSON.stringify({ ...manifest, key: key.toString('base64') }));
   let context: Awaited<ReturnType<typeof chromium.launchPersistentContext>> | undefined;
   try {
     const npmResult = await runScout(fixture.url + '/', 'button[type="submit"]');
     context = await chromium.launchPersistentContext(profile, { channel: 'chromium', headless: true, ignoreDefaultArgs: ['--disable-extensions'], args: [`--disable-extensions-except=${extension}`, `--load-extension=${extension}`] });
-    const isScoutWorker = (worker: { url(): string }) => worker.url().startsWith('chrome-extension://') && worker.url().endsWith('/background.js');
-    const worker = context.serviceWorkers().find(isScoutWorker) ?? await context.waitForEvent('serviceworker', { predicate: isScoutWorker });
-    // Chromium can announce a worker before its extension APIs are installed (notably on Windows).
-    await worker.evaluate(async () => {
-      const deadline = Date.now() + 10000;
-      while (!(globalThis as any).chrome?.tabs?.query || !(globalThis as any).chrome?.scripting?.executeScript) {
-        if (Date.now() >= deadline) throw new Error('Locator Scout worker extension APIs did not become ready');
-        await new Promise(resolve => setTimeout(resolve, 25));
-      }
-    });
     const page = await context.newPage();
     await page.goto(fixture.url + '/');
-    const scan = await worker.evaluate(async url => {
+    const panel = await context.newPage();
+    await panel.goto(`chrome-extension://${extensionId}/panel.html`);
+    await panel.getByRole('button', { name: 'Pick element', exact: true }).waitFor();
+    const scan = await panel.evaluate(async url => {
       const chrome = (globalThis as any).chrome;
       const tabs = await chrome.tabs.query({});
       const tab = tabs.find((tab: any) => tab.url === url);
@@ -75,13 +78,10 @@ it('the npm scout command and installed Chrome extension return the same locator
     assert.ok(picked, 'Real extension content script must find Login');
     assert.deepEqual(picked.result.candidates, npmResult.candidates);
     assert.ok(npmResult.candidates.some((candidate: any) => candidate.playwright.includes("getByRole('button'")));
-    const extensionId = new URL(worker.url()).host;
-    const panel = await context.newPage();
-    await panel.goto(`chrome-extension://${extensionId}/panel.html`);
-    await panel.getByRole('button', { name: 'Pick element', exact: true }).waitFor();
   } finally {
     await context?.close();
     await fixture.close();
     fs.rmSync(profile, { recursive: true, force: true });
+    fs.rmSync(extension, { recursive: true, force: true });
   }
 });
