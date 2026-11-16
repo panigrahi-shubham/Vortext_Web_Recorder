@@ -11,6 +11,7 @@ V3 retains the result and evidence of each framework test execution, so a later 
 - Shared locator inspection through the extension and npm `scout` command.
 - `vortex-qa --version` and `vortex-recorder --version` for checking an installed package.
 - Release guards that reject mismatched package, lockfile, or extension manifest versions.
+- An extension integration check that selects the Scout background worker and waits for Chrome API readiness on Windows.
 - A recorder layout fix that keeps run controls reachable while the AI assistant and code editor are open, including smaller windows.
 
 ## Install from a local build
@@ -32,6 +33,6 @@ Existing project configurations are preserved. Set report paths using `VORTEX_RE
 
 History is local with no automatic retention. A killed process can leave a `running` entry. Direct `npx playwright test` bypasses framework history. Draft recovery and datasets are proposed for V4; see V4-ROADMAP.md.
 
-The older `v3.0.0` Git tag points to the beta baseline. It is preserved; the stable package version is `3.0.0` and its final release tag is `v3.0.0-final`.
+The older `v3.0.0` Git tag points to the beta baseline, and `v3.0.0-final` preserves the first finalization checkpoint. Both are preserved; the stable package version is `3.0.0` and its final release tag is `v3.0.0-final.1`.
 
 See V3-VALIDATION.md for the checks executed for this release and their limits.

@@ -1,6 +1,6 @@
 # Vortex QA 3.0.0: final release validation
 
-Local validation performed on 16 November 2026 with Linux, Node 24.22.1, and Playwright 1.56.1. The package and extension versions are `3.0.0`. The final Git tag is `v3.0.0-final`; the older `v3.0.0` tag is preserved at the beta baseline.
+Local validation performed on 16 November 2026 with Linux, Node 24.22.1, and Playwright 1.56.1. The package and extension versions are `3.0.0`. The final Git tag is `v3.0.0-final.1`; the older `v3.0.0` tag is preserved at the beta baseline.
 
 ## Behavior
 
@@ -17,6 +17,7 @@ Local validation performed on 16 November 2026 with Linux, Node 24.22.1, and Pla
 - Reproduced the prior GitHub Linux failure in the recorder UI: the expanded AI assistant covered the run button when the code editor was open.
 - Made the code pane scroll within its allocated space and kept its controls from shrinking into the assistant.
 - The browser regression checks ordinary pointer access at 1500×1100, 1280×720, and 800×700, then executes the saved test. No forced clicks or test retries hide the defect.
+- The first Windows CI run exposed a worker-startup race in the real-extension test. The check now selects the Scout background worker and waits up to 10 seconds for its tabs/scripting APIs before exercising it. The check remains required on both operating systems.
 - Added installed `--version` output to both command-line tools.
 - Release generation rejects inconsistent package, lockfile, source-manifest, and built-manifest versions before writing release archives.
 - Corrected report-opening instructions and included release notes and the proposed V4 roadmap in the npm package.

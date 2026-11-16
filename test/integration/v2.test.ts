@@ -51,7 +51,16 @@ it('the npm scout command and installed Chrome extension return the same locator
   try {
     const npmResult = await runScout(fixture.url + '/', 'button[type="submit"]');
     context = await chromium.launchPersistentContext(profile, { channel: 'chromium', headless: true, ignoreDefaultArgs: ['--disable-extensions'], args: [`--disable-extensions-except=${extension}`, `--load-extension=${extension}`] });
-    const worker = context.serviceWorkers()[0] ?? await context.waitForEvent('serviceworker');
+    const isScoutWorker = (worker: { url(): string }) => worker.url().startsWith('chrome-extension://') && worker.url().endsWith('/background.js');
+    const worker = context.serviceWorkers().find(isScoutWorker) ?? await context.waitForEvent('serviceworker', { predicate: isScoutWorker });
+    // Chromium can announce a worker before its extension APIs are installed (notably on Windows).
+    await worker.evaluate(async () => {
+      const deadline = Date.now() + 10000;
+      while (!(globalThis as any).chrome?.tabs?.query || !(globalThis as any).chrome?.scripting?.executeScript) {
+        if (Date.now() >= deadline) throw new Error('Locator Scout worker extension APIs did not become ready');
+        await new Promise(resolve => setTimeout(resolve, 25));
+      }
+    });
     const page = await context.newPage();
     await page.goto(fixture.url + '/');
     const scan = await worker.evaluate(async url => {
