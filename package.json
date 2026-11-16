@@ -1,6 +1,6 @@
 {
   "name": "vortex-web-recorder",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0",
   "description": "Smart Playwright recorder that writes Page Objects, resilient locators and suggested assertions",
   "scripts": {
     "record": "tsx src/framework/cli.ts record",
@@ -63,7 +63,9 @@
     "AI-GUIDE.md",
     "AUTHORING-GUIDE.md",
     "V2-VALIDATION.md",
-    "V3-VALIDATION.md"
+    "V3-VALIDATION.md",
+    "RELEASE-NOTES.md",
+    "V4-ROADMAP.md"
   ],
   "dependencies": {
     "@playwright/test": "1.56.1",

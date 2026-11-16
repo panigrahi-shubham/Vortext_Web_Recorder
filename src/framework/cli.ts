@@ -6,10 +6,12 @@ import { runTests } from './runner';
 import { checkReadiness } from './doctor';
 import { spawn } from 'node:child_process';
 import { listRuns, reportDirectory } from './history';
+import { VERSION } from '../util/version';
 
 async function main() {
   const root = process.cwd();
   const args = parseArgs(process.argv.slice(2));
+  if (bool(args, 'version')) { console.log(VERSION); return; }
   const cmd = args._[0];
   if (cmd === 'history') {
     const runs = listRuns(root);

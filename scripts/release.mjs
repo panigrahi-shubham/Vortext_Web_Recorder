@@ -3,8 +3,19 @@ import { createHash } from 'node:crypto';
 import { readdirSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
+import assert from 'node:assert/strict';
 
 const { version } = JSON.parse(readFileSync('package.json', 'utf8'));
+for (const file of ['package-lock.json', 'extension/package.json', 'extension/package-lock.json']) {
+  const metadata = JSON.parse(readFileSync(file, 'utf8'));
+  assert.equal(metadata.version, version, `${file} must match the release version`);
+  if (metadata.packages) assert.equal(metadata.packages[''].version, version, `${file} root package must match the release version`);
+}
+for (const file of ['extension/public/manifest.json', 'extension/dist/manifest.json']) {
+  const manifest = JSON.parse(readFileSync(file, 'utf8'));
+  assert.equal(manifest.version, version.split('-')[0], `${file} must match the numeric release version`);
+  assert.equal(manifest.version_name, version, `${file} must match the full release version`);
+}
 mkdirSync('artifacts', { recursive: true });
 const files = {};
 function collect(directory, prefix = '') {

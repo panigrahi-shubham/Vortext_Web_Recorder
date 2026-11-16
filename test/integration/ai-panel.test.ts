@@ -58,6 +58,11 @@ it('AI panel requires preview/consent, hides its key, reviews a mock proposal an
     await page.locator('#savedPath').filter({hasText:'ai-panel-verification.spec.ts'}).waitFor();
     assert.match(fs.readFileSync(panel.state().framework!.savedFile!,'utf8'),/AI mock proposal/);
     assert.equal(panel.state().framework!.run.code,null);
+    // The open assistant and code editor must not cover the run controls.
+    for (const viewport of [{width:1500,height:1100},{width:1280,height:720},{width:800,height:700}]) {
+      await page.setViewportSize(viewport);
+      await page.getByRole('button',{name:'Run saved test',exact:true}).click({trial:true,timeout:5000});
+    }
     await page.getByRole('button',{name:'Run saved test',exact:true}).click();
     await page.waitForFunction(()=>document.getElementById('runOutput')!.textContent!.includes('Runner exit code: 0'));
     await page.getByRole('button',{name:'Disable and clear key',exact:true}).click();

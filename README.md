@@ -1,11 +1,11 @@
-# Vortex QA v3.0.0-beta.1
+# Vortex QA v3.0.0
 
 Two local development tools live in this repository:
 
 - **Chrome extension:** Locator Scout, under `extension/`. Pick elements, inspect ranked locators, scan pages, verify expressions, and export Playwright or Selenium Page Objects.
 - **npm software:** `vortex-web-recorder`. Record browser journeys, edit generated code, save tests, run them with Playwright, and inspect locators with the same engine used by the extension.
 
-This v3 beta adds persistent run history on top of the v2 packaging and reliability improvements. Draft recovery and datasets remain future work. The recorder's existing capture engine remains in place. The extension and the new `scout` command share the extension locator engine; the recorder's locator ranking has not been replaced.
+V3 adds persistent run history on top of the v2 packaging and reliability improvements. Draft recovery and datasets remain future work. The recorder's existing capture engine remains in place. The extension and the new `scout` command share the extension locator engine; the recorder's locator ranking has not been replaced.
 
 ## Build both products
 
@@ -23,12 +23,12 @@ npm run release
 
 ## Install the Chrome extension
 
-Extract `artifacts/vortex-locator-scout-3.0.0-beta.1.zip` into a folder. In Chrome or Edge, open `chrome://extensions`, enable Developer mode, select **Load unpacked**, and choose that extracted folder. Developers can load `extension/dist` directly after building. See [extension/README.md](extension/README.md) for usage and permissions.
+Extract `artifacts/vortex-locator-scout-3.0.0.zip` into a folder. In Chrome or Edge, open `chrome://extensions`, enable Developer mode, select **Load unpacked**, and choose that extracted folder. Developers can load `extension/dist` directly after building. See [extension/README.md](extension/README.md) for usage and permissions.
 
 ## Install the npm software in your test project
 
 ```sh
-npm install --save-dev /path/to/vortex-web-recorder-3.0.0-beta.1.tgz
+npm install --save-dev /path/to/vortex-web-recorder-3.0.0.tgz
 npx playwright install chromium
 npx vortex-qa init
 npx vortex-qa doctor --panel-port 0
@@ -70,7 +70,7 @@ npx vortex-qa record --url https://vortex-qa.vercel.app/shop --module my-product
 ```
 
 
-See [V3-VALIDATION.md](V3-VALIDATION.md) for executed checks and limits.
+See [V3-VALIDATION.md](V3-VALIDATION.md) for executed checks and limits, [RELEASE-NOTES.md](RELEASE-NOTES.md) for the final V3 release, and [V4-ROADMAP.md](V4-ROADMAP.md) for the proposed next milestone.
 
 ## v3: run history
 
@@ -105,7 +105,7 @@ const reportDir = process.env.VORTEX_REPORT_DIR || 'reports/latest';
 
 Configurations that ignore this variable retain status and console output in history, but native evidence follows their own configured paths. The history CLI does not claim an HTML report exists for such runs. Their last framework-generated report remains unchanged.
 
-The Chrome extension is included in the coordinated v3 beta release; this milestone changes the npm recorder's reporting workflow, with the extension's locator behavior preserved.
+The Chrome extension is included in the coordinated V3 release; this milestone changes the npm recorder's reporting workflow, with the extension's locator behavior preserved.
 
 ## Earlier recorder documentation
 
@@ -254,11 +254,12 @@ The milestone includes a minimal native configuration so execution produces actu
 - Video disabled; traces retained on failure; no retries by default.
 
 ```powershell
-npm run qa:report
+npm run qa:history
+npm run qa:report -- --run <run-id>
 npx playwright show-trace "reports/latest/artifacts/<test-folder>/trace.zip"
 ```
 
-The latest report is replaced on the next executed run. Empty/discovery-only selections do not replace an older execution report; consult the terminal/panel result for the current command. Report history, email, dynamic data generators, Windows launchers and a production distribution release are later milestones.
+The latest report is replaced on the next executed run that produces a native HTML report. Earlier runs remain in `reports/history/`. Empty/discovery-only selections do not replace the latest report; consult the terminal/panel result for the current command. Draft recovery, datasets, and email delivery remain future work.
 
 ## Recorder compatibility and generation safeguards
 

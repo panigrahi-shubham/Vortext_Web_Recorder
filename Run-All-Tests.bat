@@ -11,7 +11,7 @@ echo Running saved application tests...
 call npm run qa:run -- %*
 set "result=%errorlevel%"
 if not "%result%"=="0" echo Tests did not pass or no tests were found. Exit code: %result%.
-if "%result%"=="0" echo Run finished. Use npm run qa:report to open the HTML report.
+if "%result%"=="0" echo Run finished. Use npm run qa:history, then npm run qa:report -- --run RUN_ID to open the HTML report.
 goto finish
 :setup_required
 echo ERROR: Run Setup.bat first. Node.js and npm must be installed.

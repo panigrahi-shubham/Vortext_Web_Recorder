@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // TPHub Web Recorder command line.
 import { bool, parseArgs, parseViewport, str } from './util/args';
+import { VERSION } from './util/version';
 
 const HELP = `
 Vortex QA Recorder: Playwright recording and test generation
@@ -41,6 +42,7 @@ check options:
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
+  if (bool(args, 'version')) { console.log(VERSION); return; }
   const cmd = args._[0];
   if (!cmd || bool(args, 'help') || cmd === 'help') {
     console.log(HELP);

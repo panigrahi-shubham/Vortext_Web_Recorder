@@ -1,6 +1,6 @@
 {
   "name": "locator-scout",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0",
   "private": true,
   "description": "Rule-based locator finder and suggester for Playwright and Selenium (Chrome extension, MV3)",
   "type": "module",

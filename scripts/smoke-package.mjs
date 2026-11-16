@@ -30,6 +30,9 @@ try {
   await run([process.env.npm_execpath, 'install', '--ignore-scripts', '--no-audit', '--no-fund', archive]);
   const installed = path.join(consumer, 'node_modules', name);
   const cli = path.join(installed, 'dist/framework/cli.js');
+  assert.equal(JSON.parse(readFileSync(path.join(installed, 'package.json'), 'utf8')).version, version);
+  assert.equal((await run([cli, '--version'])).trim(), version);
+  assert.equal((await run([path.join(installed, 'dist/cli.js'), '--version'])).trim(), version);
   await run([cli, 'init']);
   assert.match(await run([cli, 'doctor', '--panel-port', '0']), /PASS Browser/);
   const require = createRequire(import.meta.url);

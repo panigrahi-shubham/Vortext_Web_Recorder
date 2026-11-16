@@ -1,4 +1,4 @@
-# Vortex Locator Scout — v3 beta integration
+# Vortex Locator Scout — v3.0.0
 
 This extension is part of the Vortex QA repository. Build with `npm ci --prefix extension` followed by `npm run build:extension` from the repository root. Load `extension/dist` unpacked, or extract the generated release ZIP. The source under `src/engine` also builds the browser engine shipped in the npm software's `scout` command. It does not contact a local recorder server or send page data to a provider.
 

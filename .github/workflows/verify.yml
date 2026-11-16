@@ -1,5 +1,7 @@
 name: Verify both products
 on: [push, pull_request]
+permissions:
+  contents: read
 jobs:
   verify:
     strategy:
@@ -35,3 +37,22 @@ jobs:
         with:
           name: vortex-v3-${{ matrix.os }}
           path: artifacts/
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: vortex-v3-ubuntu-latest
+          path: artifacts/
+      - name: Publish checked release archives
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          release_version=$(node -p "require('./package.json').version")
+          gh release create "$RELEASE_TAG" artifacts/* --verify-tag --title "Vortex QA ${release_version}" --notes-file RELEASE-NOTES.md
